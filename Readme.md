@@ -29,8 +29,9 @@ vagrant ssh
 sudo sed -i 's/^#DOCKER_OPTS.*/DOCKER_OPTS="-H tcp:\/\/0.0.0.0:4243 -H unix:\/\/var\/run\/docker.sock"/g' /etc/default/docker
 
 # Now you can restat, and you should be able to:
-#
-#   docker -H tcp://0.0.0.0:4243 ps
+
+#   export DOCKER_HOST=tcp://0.0.0.0:4243
+#   docker ps
 #
 # from OSX and
 #
