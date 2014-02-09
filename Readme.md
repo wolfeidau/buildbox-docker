@@ -2,11 +2,11 @@
 
 The Builbdox Docker toolset allows you to have agents start/stop within Docker containers.
 
-## How secure is this?
+### How secure is this?
 
 Docker containers are super secure. See: http://blog.docker.io/2013/08/containers-docker-how-secure-are-they/
 
-## Running on OSX
+### Running on OSX
 
 Install VirtualBox (needs version 4.2) https://www.virtualbox.org/wiki/Download_Old_Builds_4_2
 
@@ -16,7 +16,7 @@ vagrant init raring32 http://cloud-images.ubuntu.com/vagrant/raring/current/rari
 vagrant ssh
 ```
 
-## Setting up the host machine (Ubuntu 64-bit only)
+### Setting up the host machine (Ubuntu 64-bit only)
 
 Source: http://docs.docker.io/en/latest/installation/ubuntulinux/#ubuntu-raring-13-04-and-saucy-13-10-64-bit
 
