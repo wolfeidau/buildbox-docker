@@ -1,10 +1,22 @@
 # Buildbox Docker
 
-The Builbdox Docker toolset allows you to have agents start/stop within Docker containers.
+The Builbdox Docker toolset allows you to have agents start/stop within Docker
+containers.
+
+### How does it work?
+
+When you run the `buildbox-docker` command, it will monitor agents you specify
+on Buildbox and look for new jobs for them to perform. When a new job becomes a
+available, it will download the agents Dockerfile, build it, and then run the
+`buildbox-agent` inside the new container.
+
+It runs the `buildbox-agent` command with an `--exit-on-complete` flag, so when
+it's finished running all the builds it can, it will shut itself down.
 
 ### How secure is this?
 
-Docker containers are super secure. See: http://blog.docker.io/2013/08/containers-docker-how-secure-are-they/
+Docker containers are super secure. See:
+http://blog.docker.io/2013/08/containers-docker-how-secure-are-they/
 
 ### Running on OSX
 
