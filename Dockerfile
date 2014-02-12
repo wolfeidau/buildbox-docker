@@ -15,6 +15,10 @@ RUN DESTINATION=/home/buildbox/.buildbox bash -c "`curl -sL https://agent.buildb
 RUN chown -R buildbox:buildbox /home/buildbox/.buildbox
 RUN ln -s /home/buildbox/.buildbox/buildbox-agent /usr/local/bin
 
+# Add our custom bootstrap script for hosted agents
+ADD bootstrap.sh /home/buildbox/.buildbox/bootstrap.sh
+RUN chmod +x /home/buildbox/.buildbox/bootstrap.sh
+
 # Drop privileges so commands can only be run as buildbox
 ENV HOME /home/buildbox
 WORKDIR /home/buildbox
