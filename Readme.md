@@ -7,11 +7,8 @@ containers.
 
 When you run the `buildbox-docker` command, it will monitor agents you specify
 on Buildbox and look for new jobs for them to perform. When a new job becomes a
-available, it will download the agents Dockerfile, build it, and then run the
-`buildbox-agent` inside the new container.
-
-It runs the `buildbox-agent` command with an `--exit-on-complete` flag, so when
-it's finished running all the builds it can, it will shut itself down.
+available, it will first make sure the container has been build, and then run the
+bootstrap.sh script inside the container with all the correct ENV varaibles set.
 
 ### How secure is this?
 
