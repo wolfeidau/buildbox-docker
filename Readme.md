@@ -15,11 +15,19 @@ bootstrap.sh script inside the container with all the correct ENV varaibles set.
 Docker containers are super secure. See:
 http://blog.docker.io/2013/08/containers-docker-how-secure-are-they/
 
-### Setting up the image
+### Setup
 
 ```bash
+# Get the repo
+git clone git@github.com:buildboxhq/buildbox-docker.git
+cd buildbox-docker
+
+# Build the image
 docker build -rm .
 docker tag [commit] buildboxhq/base
+
+# Run the process
+buildbox-docker --access-token [access-token]
 ```
 
 ### Running on OSX
