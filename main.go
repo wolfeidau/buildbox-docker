@@ -25,6 +25,18 @@ type Job struct {
   AgentAccessToken string `json:"agent_access_token"`
 }
 
+
+type Options struct {
+  // How much memory is allowed
+  Memory string
+
+  // The name of the Docker continer to use
+  Container string
+
+  // How many jobs can run at once on the machine.
+  Concurrency string
+}
+
 func main() {
   cli.AppHelpTemplate = AppHelpTemplate
 
@@ -36,6 +48,8 @@ func main() {
   app.Flags = []cli.Flag {
     cli.StringFlag{"access-token", "", "The access token used to identify the agent."},
     cli.StringFlag{"docker-container", "buildboxhq/base", "The docker container to run the jobs in."},
+    cli.StringFlag{"memory", "4g", "Memory limit (format: <number><optional unit>, where unit = b, k, m or g)"},
+    cli.StringFlag{"concurrency", "2", "How many builds the machine is able to perform at any one time"},
     cli.StringFlag{"url", "https://agent.buildbox.io/v1", "The Agent API endpoint."},
     cli.BoolFlag{"debug", "Enable debug mode."},
   }
@@ -58,14 +72,21 @@ func main() {
     client.URL = c.String("url")
     client.Debug = c.Bool("debug")
 
-    start(client, c.String("docker-container"))
+    // Create our options struct
+    var options Options
+    options.Memory = c.String("memory")
+    options.Container = c.String("docker-container")
+    options.Concurrency = c.String("concurrency")
+
+    // Start the work
+    start(client, options)
   }
 
   // Run our application
   app.Run(os.Args)
 }
 
-func start(client buildbox.Client, container string) {
+func start(client buildbox.Client, options Options) {
   // How long the agent will wait when no jobs can be found.
   idleSeconds := 5
   sleepTime := time.Duration(idleSeconds * 1000) * time.Millisecond
@@ -80,7 +101,7 @@ func start(client buildbox.Client, container string) {
       if err == nil {
         for _, job := range jobs {
           // In the event that the run fails, we dont really care.
-          err = run(client, job, container)
+          err = run(client, job, options)
         }
       } else {
         log.Printf("Failed to download job queue: %s\n", err)
@@ -94,10 +115,11 @@ func start(client buildbox.Client, container string) {
   }
 }
 
-func run(client buildbox.Client, job Job, container string) error {
+func run(client buildbox.Client, job Job, options Options) error {
   // Create the command to run
   agentCommand := fmt.Sprintf("buildbox-agent run %s --access-token %s --url %s", job.ID, job.AgentAccessToken, client.URL)
-  cmd := exec.Command("docker", "run", container, "/bin/bash", "--login", "-c", agentCommand)
+  dockerOptions := fmt.Sprintf("--memory=%s", options.Memory)
+  cmd := exec.Command("docker", "run", dockerOptions, options.Container, "/bin/bash", "--login", "-c", agentCommand)
 
   // Pipe the STDERR and STDOUT to this processes outputs
   cmd.Stdout = os.Stdout
