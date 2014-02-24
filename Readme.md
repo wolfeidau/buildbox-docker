@@ -19,7 +19,7 @@ http://blog.docker.io/2013/08/containers-docker-how-secure-are-they/
 
 ```bash
 # Get the repo
-git clone git@github.com:buildboxhq/buildbox-docker.git
+git clone https://github.com/buildboxhq/buildbox-docker
 cd buildbox-docker
 
 # Build the image
