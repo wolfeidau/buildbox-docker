@@ -2,7 +2,7 @@ FROM ubuntu:precise
 
 # Upgrade and update all the things
 RUN echo "deb http://archive.ubuntu.com/ubuntu precise main universe" > /etc/apt/sources.list
-RUN apt-get -y update
+RUN apt-get update
 RUN apt-get -y upgrade
 
 # Make sure we're running the right LANG
@@ -19,6 +19,14 @@ RUN echo "session optional pam_umask.so umask=002" >> /etc/pam.d/common-session-
 
 # The user the builds will run as
 RUN sudo useradd buildbox --shell /bin/bash --create-home
+
+# Setup the agent
+RUN mkdir -p /home/buildbox/.buildbox
+RUN DESTINATION=/home/buildbox/.buildbox bash -c "`curl -sL https://agent.buildbox.io/install.sh`"
+RUN chown -R buildbox:buildbox /home/buildbox/.buildbox
+RUN ln -s /home/buildbox/.buildbox/buildbox-agent /usr/local/bin
+ADD bootstrap.sh /home/buildbox/.buildbox/bootstrap.sh
+RUN chmod +x /home/buildbox/.buildbox/bootstrap.sh
 
 # node.js
 RUN apt-get install -y python-software-properties
