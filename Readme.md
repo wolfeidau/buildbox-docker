@@ -15,6 +15,12 @@ bootstrap.sh script inside the container with all the correct ENV varaibles set.
 Docker containers are super secure. See:
 http://blog.docker.io/2013/08/containers-docker-how-secure-are-they/
 
+### Building the Image
+
+```bash
+docker build -rm .
+```
+
 ### Running on OSX
 
 Installing docker is pretty easy:
