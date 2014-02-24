@@ -3,6 +3,7 @@ package main
 import (
   "os"
   "os/exec"
+  "time"
   "log"
   "fmt"
   "github.com/codegangsta/cli"
@@ -15,6 +16,14 @@ Usage:
 
   buildbox-docker --access-token [access-token]
 `
+
+type Job struct {
+  // The id of the job
+  ID string `json:"job_id"`
+
+  // The access token of the agent
+  AgentAccessToken string `json:"agent_access_token"`
+}
 
 func main() {
   cli.AppHelpTemplate = AppHelpTemplate
@@ -43,28 +52,57 @@ func main() {
     client.URL = c.String("url")
     client.Debug = c.Bool("debug")
 
-    // Find out the image of the docker container to user. To get the last
-    // created image, you can run: `docker ps -l | awk 'NR==2' | awk '{print $2}'`
-    // in your console.
-    image := "d7694418f082"
-
-    // The ID of the job
-    job := "8a6ff1f101c200fbfb3a08224c5e308d50cc1311"
-
-    // Create the command to run
-    cmd := exec.Command("docker", "run", image, "/bin/bash", "--login", "-c", "buildbox-agent run " + job + " --access-token " + client.AgentAccessToken + " --url " + client.URL)
-
-    // Pipe the STDERR and STDOUT to this processes outputs
-    cmd.Stdout = os.Stdout
-    cmd.Stderr = os.Stderr
-
-    // Run the command
-    err := cmd.Run()
-    if err != nil {
-      log.Fatal(err)
-    }
+    start(client)
   }
 
   // Run our application
   app.Run(os.Args)
+}
+
+func start(client buildbox.Client) {
+  // How long the agent will wait when no jobs can be found.
+  idleSeconds := 5
+  sleepTime := time.Duration(idleSeconds * 1000) * time.Millisecond
+
+  for {
+    req, err := client.NewRequest("GET", "/jobs/queue", nil)
+
+    if err == nil {
+      var jobs []Job
+      client.DoReq(req, &jobs)
+
+      for _, job := range jobs {
+        // In the event that the run fails, we dont really care.
+        err = run(client, job)
+      }
+    } else {
+      log.Println("Failed to download job queue: %s", err)
+    }
+
+    // Sleep then check again later.
+    time.Sleep(sleepTime)
+  }
+}
+
+func run(client buildbox.Client, job Job) error {
+  // Find out the image of the docker container to user. To get the last
+  // created image, you can run: `docker ps -l | awk 'NR==2' | awk '{print $2}'`
+  // in your console.
+  image := "d7694418f082"
+
+  // Create the command to run
+  agentCommand := fmt.Sprintf("buildbox-agent run %s --access-token %s --url %s", job.ID, job.AgentAccessToken, client.URL)
+  cmd := exec.Command("docker", "run", image, "/bin/bash", "--login", "-c", agentCommand)
+
+  // Pipe the STDERR and STDOUT to this processes outputs
+  cmd.Stdout = os.Stdout
+  cmd.Stderr = os.Stderr
+
+  // Run the command
+  err := cmd.Run()
+  if err != nil {
+    return err
+  }
+
+  return nil
 }
