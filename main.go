@@ -75,14 +75,18 @@ func start(client buildbox.Client, container string) {
 
     if err == nil {
       var jobs []Job
-      client.DoReq(req, &jobs)
 
-      for _, job := range jobs {
-        // In the event that the run fails, we dont really care.
-        err = run(client, job, container)
+      err = client.DoReq(req, &jobs)
+      if err == nil {
+        for _, job := range jobs {
+          // In the event that the run fails, we dont really care.
+          err = run(client, job, container)
+        }
+      } else {
+        log.Printf("Failed to download job queue: %s\n", err)
       }
     } else {
-      log.Println("Failed to download job queue: %s", err)
+      log.Printf("Failed to create job queue request: %s\n", err)
     }
 
     // Sleep then check again later.
