@@ -2,8 +2,9 @@ package main
 
 import (
   "os"
-  "fmt"
+  "os/exec"
   "log"
+  "fmt"
   "github.com/codegangsta/cli"
   "github.com/buildboxhq/agent-go/buildbox"
 )
@@ -42,16 +43,26 @@ func main() {
     client.URL = c.String("url")
     client.Debug = c.Bool("debug")
 
-    // Find out the image of the docker container to user
+    // Find out the image of the docker container to user. To get the last
+    // created image, you can run: `docker ps -l | awk 'NR==2' | awk '{print $2}'`
+    // in your console.
     image := "d7694418f082"
 
     // The ID of the job
-    job := "1234"
+    job := "8a6ff1f101c200fbfb3a08224c5e308d50cc1311"
 
-    command := fmt.Sprintf("docker run %s /bin/bash --login -c 'buildbox-agent run %s --access-token %s --url %s'", image, job, client.AgentAccessToken, client.URL)
+    // Create the command to run
+    cmd := exec.Command("docker", "run", image, "/bin/bash", "--login", "-c", "buildbox-agent run " + job + " --access-token " + client.AgentAccessToken + " --url " + client.URL)
 
-    log.Printf(command)
+    // Pipe the STDERR and STDOUT to this processes outputs
+    cmd.Stdout = os.Stdout
+    cmd.Stderr = os.Stderr
 
+    // Run the command
+    err := cmd.Run()
+    if err != nil {
+      log.Fatal(err)
+    }
   }
 
   // Run our application
