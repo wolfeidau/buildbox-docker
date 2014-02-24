@@ -15,10 +15,11 @@ bootstrap.sh script inside the container with all the correct ENV varaibles set.
 Docker containers are super secure. See:
 http://blog.docker.io/2013/08/containers-docker-how-secure-are-they/
 
-### Building the Image
+### Setting up the image
 
 ```bash
 docker build -rm .
+docker tag [commit] buildboxhq/base
 ```
 
 ### Running on OSX
@@ -62,7 +63,12 @@ Source: http://docs.docker.io/en/latest/installation/ubuntulinux/#ubuntu-raring-
 ```
 # Update and install some stuff that docker needs
 sudo apt-get update
+
+# Ubuntu Raring 13.04 and Saucy 13.10 (64 bit)
 sudo apt-get -y install linux-image-extra-`uname -r`
+
+# Ubuntu Precise 12.04 (LTS) (64-bit)
+sudo apt-get install linux-image-generic-lts-raring linux-headers-generic-lts-raring
 
 # Install docker
 sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 36A1D7869245C8950F966E92D8576A8BA88D21E9
