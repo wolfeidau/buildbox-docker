@@ -62,16 +62,30 @@ func main() {
       os.Exit(1)
     }
 
-    // Setup the HTTP client
-    var client buildbox.Client;
-    client.AgentAccessToken = c.String("access-token")
-    client.URL = c.String("url")
-    client.Debug = c.Bool("debug")
+    // Set the agent options
+    var agent buildbox.Agent;
+    agent.Debug = c.Bool("debug")
 
-    // Create our options struct
+    // Client specific options
+    agent.Client.AgentAccessToken = c.String("access-token")
+    agent.Client.URL = c.String("url")
+    agent.Client.Debug = agent.Debug
+
+    // Job specific options
     var options Options
     options.Memory = c.String("memory")
     options.Container = c.String("docker-container")
+
+    // Tell the user that debug mode has been enabled
+    if agent.Debug {
+      log.Printf("Debug mode enabled")
+    }
+
+    // Setup the agent
+    agent.Setup()
+
+    // A nice welcome message
+    log.Printf("Started buildbox-docker with agent `%s` (version %s)\n", agent.Name, buildbox.Version)
 
     // Create a wait group
     var w sync.WaitGroup
@@ -84,7 +98,7 @@ func main() {
         log.Printf("Starting worker (%d/%d)", index + 1, workers)
 
         // Start the client
-        start(client, options)
+        start(agent.Client, options)
 
         w.Done()
       }(i)
