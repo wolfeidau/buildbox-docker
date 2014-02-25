@@ -6,6 +6,8 @@ import (
   "time"
   "log"
   "fmt"
+  "errors"
+  "sync"
   "github.com/codegangsta/cli"
   "github.com/buildboxhq/agent-go/buildbox"
 )
@@ -17,24 +19,12 @@ Usage:
   buildbox-docker --access-token [access-token]
 `
 
-type Job struct {
-  // The id of the job
-  ID string `json:"job_id"`
-
-  // The access token of the agent
-  AgentAccessToken string `json:"agent_access_token"`
-}
-
-
 type Options struct {
   // How much memory is allowed
   Memory string
 
   // The name of the Docker continer to use
   Container string
-
-  // How many jobs can run at once on the machine.
-  Concurrency string
 }
 
 func main() {
@@ -49,7 +39,7 @@ func main() {
     cli.StringFlag{"access-token", "", "The access token used to identify the agent."},
     cli.StringFlag{"docker-container", "buildboxhq/base", "The docker container to run the jobs in."},
     cli.StringFlag{"memory", "4g", "Memory limit (format: <number><optional unit>, where unit = b, k, m or g)"},
-    cli.StringFlag{"concurrency", "2", "How many builds the machine is able to perform at any one time"},
+    cli.IntFlag{"workers", 2, "How many builds the machine is able to perform at any one time"},
     cli.StringFlag{"url", "https://agent.buildbox.io/v1", "The Agent API endpoint."},
     cli.BoolFlag{"debug", "Enable debug mode."},
   }
@@ -66,6 +56,12 @@ func main() {
       os.Exit(1)
     }
 
+    workers := c.Int("workers")
+    if workers <= 0 {
+      fmt.Printf("buildbox-docker: worker count must be greater than 0\nSee 'buildbox-docker --help'\n")
+      os.Exit(1)
+    }
+
     // Setup the HTTP client
     var client buildbox.Client;
     client.AgentAccessToken = c.String("access-token")
@@ -76,10 +72,26 @@ func main() {
     var options Options
     options.Memory = c.String("memory")
     options.Container = c.String("docker-container")
-    options.Concurrency = c.String("concurrency")
 
-    // Start the work
-    start(client, options)
+    // Create a wait group
+    var w sync.WaitGroup
+    w.Add(workers)
+
+    // Start the workers
+    for i := 0; i < workers; i++ {
+      go func(index int) {
+        // A nice message about the client
+        log.Printf("Starting worker (%d/%d)", index + 1, workers)
+
+        // Start the client
+        start(client, options)
+
+        w.Done()
+      }(i)
+    }
+
+    // Wait for the workers to finish
+    w.Wait()
   }
 
   // Run our application
@@ -92,22 +104,15 @@ func start(client buildbox.Client, options Options) {
   sleepTime := time.Duration(idleSeconds * 1000) * time.Millisecond
 
   for {
-    req, err := client.NewRequest("GET", "/jobs/queue", nil)
+    job, err := client.JobNext()
 
-    if err == nil {
-      var jobs []Job
-
-      err = client.DoReq(req, &jobs)
-      if err == nil {
-        for _, job := range jobs {
-          // In the event that the run fails, we dont really care.
-          err = run(client, job, options)
-        }
-      } else {
-        log.Printf("Failed to download job queue: %s\n", err)
-      }
+    if err != nil {
+      log.Printf("Failed to get next job: %s\n", err)
     } else {
-      log.Printf("Failed to create job queue request: %s\n", err)
+      // Do we have a job to perform?
+      if job.ID != "" {
+        run(client, job, options)
+      }
     }
 
     // Sleep then check again later.
@@ -115,9 +120,24 @@ func start(client buildbox.Client, options Options) {
   }
 }
 
-func run(client buildbox.Client, job Job, options Options) error {
+func run(client buildbox.Client, job *buildbox.Job, options Options) error {
+  // Extract the agent access token
+  agentAccessToken := ""
+
+  // Add the environment variables from the API to the process
+  for key, value := range job.Env {
+    if key == "BUILDBOX_AGENT_ACCESS_TOKEN"{
+      agentAccessToken = value
+    }
+  }
+
+  // If one couldn't be found, no job!
+  if agentAccessToken == "" {
+    return errors.New("BUILDBOX_AGENT_ACCESS_TOKEN could not be found")
+  }
+
   // Create the command to run
-  agentCommand := fmt.Sprintf("buildbox-agent run %s --access-token %s --url %s", job.ID, job.AgentAccessToken, client.URL)
+  agentCommand := fmt.Sprintf("buildbox-agent run %s --access-token %s --url %s", job.ID, agentAccessToken, client.URL)
   dockerOptions := fmt.Sprintf("--memory=%s", options.Memory)
   cmd := exec.Command("docker", "run", dockerOptions, options.Container, "/bin/bash", "--login", "-c", agentCommand)
 
