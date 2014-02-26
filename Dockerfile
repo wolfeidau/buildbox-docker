@@ -128,6 +128,20 @@ RUN apt-get -y --force-yes -q install imagemagick libjpeg8-dev libpng12-dev
 
 # =====================================
 #
+# Redis
+#
+# =====================================
+RUN cd /tmp && curl -L -O http://download.redis.io/redis-stable.tar.gz
+RUN tar xvzf /tmp/redis-stable.tar.gz -C /tmp
+RUN cd /tmp/redis-stable && make && make install
+RUN mkdir /etc/redis
+RUN mkdir /var/lib/redis
+ADD redis/redis /etc/init.d/redis
+ADD redis/redis.conf /etc/redis/redis.conf
+RUN chmod 755 /etc/init.d/redis
+
+# =====================================
+#
 # Defaults
 #
 # =====================================
