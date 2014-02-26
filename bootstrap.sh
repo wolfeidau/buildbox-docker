@@ -10,14 +10,10 @@ sudo /etc/init.d/postgresql start
 sudo /etc/init.d/redis start
 
 echo '--- setup ssh'
-mkdir -p ~/.ssh
 echo "$BUILDBOX_AGENT_SSH_PRIVATE_KEY" >> ~/.ssh/id_rsa
 echo "$BUILDBOX_AGENT_SSH_PUBLIC_KEY" >> ~/.ssh/id_rsa.pub
 chmod 0600 ~/.ssh/id_rsa
 chmod 0600 ~/.ssh/id_rsa.pub
-# This is probably not ideal, so open to suggestions.
-echo "Host *
-        StrictHostKeyChecking no" > ~/.ssh/config
 
 echo '--- setting up repo'
 # Create the build directory

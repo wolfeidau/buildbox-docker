@@ -40,6 +40,10 @@ RUN sudo usermod -a -G sudo buildbox
 RUN sudo usermod -a -G sudo buildbox
 RUN echo 'ALL ALL = (ALL) NOPASSWD: ALL' >> /etc/sudoers
 
+# Setup SSH for the user
+RUN mkdir -p /home/buildbox/.ssh
+ADD ssh/known_hosts /home/buildbox/.ssh/known_hosts
+RUN chmod 644 /home/buildbox/.ssh/known_hosts
 
 # =====================================
 #
