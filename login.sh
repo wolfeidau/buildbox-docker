@@ -2,4 +2,5 @@
 set -e
 set -x
 
-docker run -i -t buildboxhq/base /bin/bash --login
+export DOCKER_HOST=tcp://0.0.0.0:4243
+docker run -rm -i -t buildboxhq/base /bin/bash --login
