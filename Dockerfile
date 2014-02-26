@@ -121,6 +121,13 @@ RUN mv /tmp/phantomjs-1.9.7-linux-x86_64/bin/phantomjs /usr/local/bin
 
 # =====================================
 #
+# ImageMagick
+#
+# =====================================
+RUN apt-get -y --force-yes -q install imagemagick libjpeg8-dev libpng12-dev
+
+# =====================================
+#
 # Defaults
 #
 # =====================================
