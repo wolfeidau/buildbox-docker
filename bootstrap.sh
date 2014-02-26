@@ -7,6 +7,7 @@ env | grep BUILDBOX
 
 echo '--- starting services'
 sudo /etc/init.d/postgresql start
+sudo /etc/init.d/redis start
 
 echo '--- setup ssh'
 mkdir -p ~/.ssh
