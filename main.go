@@ -157,8 +157,8 @@ func run(client buildbox.Client, job *buildbox.Job, options Options) error {
 
   // Create the command to run
   agentCommand := fmt.Sprintf("buildbox-agent run %s --access-token %s --url %s", job.ID, agentAccessToken, client.URL)
-  dockerOptions := fmt.Sprintf("--memory=%s", options.Memory)
-  cmd := exec.Command("docker", "run", dockerOptions, options.Container, "/bin/bash", "--login", "-c", agentCommand)
+  memoryOption := fmt.Sprintf("--memory=%s", options.Memory)
+  cmd := exec.Command("docker", "run", "--rm=true", memoryOption, options.Container, "/bin/bash", "--login", "-c", agentCommand)
 
   // Pipe the STDERR and STDOUT to this processes outputs
   cmd.Stdout = os.Stdout
