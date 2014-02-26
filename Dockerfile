@@ -111,6 +111,16 @@ ENV PGLOG /var/log/postgresql/postgresql-9.3-main.log
 
 # =====================================
 #
+# PhantomJS
+#
+# =====================================
+
+RUN cd /tmp && curl -L -O https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-1.9.7-linux-x86_64.tar.bz2
+RUN tar xjf /tmp/phantomjs-1.9.7-linux-x86_64.tar.bz2 -C /tmp
+RUN mv /tmp/phantomjs-1.9.7-linux-x86_64/bin/phantomjs /usr/local/bin
+
+# =====================================
+#
 # Defaults
 #
 # =====================================
