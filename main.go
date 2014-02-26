@@ -94,11 +94,8 @@ func main() {
     // Start the workers
     for i := 0; i < workers; i++ {
       go func(index int) {
-        // A nice message about the client
-        log.Printf("Starting worker (%d/%d)", index + 1, workers)
-
         // Start the client
-        start(agent.Client, options)
+        start(fmt.Sprintf("%d/%d", index + 1, workers), agent.Client, options)
 
         w.Done()
       }(i)
@@ -112,10 +109,13 @@ func main() {
   app.Run(os.Args)
 }
 
-func start(client buildbox.Client, options Options) {
+func start(name string, client buildbox.Client, options Options) {
   // How long the agent will wait when no jobs can be found.
   idleSeconds := 5
   sleepTime := time.Duration(idleSeconds * 1000) * time.Millisecond
+
+  // A nice message about the client
+  log.Printf("Starting worker (%s)", name)
 
   for {
     job, err := client.JobNext()
@@ -129,6 +129,8 @@ func start(client buildbox.Client, options Options) {
         if err != nil {
           log.Printf("Failed to run job: %s\n", err)
         }
+
+        log.Printf("Worker (%s) is now free", name)
       }
     }
 
