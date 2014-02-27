@@ -69,7 +69,10 @@ RUN echo 'eval "$(rbenv init -)"' >> /home/buildbox/.profile
 RUN git clone https://github.com/sstephenson/ruby-build.git /home/buildbox/.rbenv/plugins/ruby-build
 RUN echo 'gem: --no-rdoc --no-ri' >> /home/buildbox/.gemrc
 RUN chown -R buildbox:buildbox /home/buildbox
-RUN su buildbox /bin/bash --login -c "rbenv install 2.1.0 && rbenv global 2.1.0 && gem install bundler && rbenv rehash"
+RUN su buildbox /bin/bash --login -c "rbenv install 2.0.0-p247 && rbenv local 2.0.0-p247 && gem install bundler && rbenv rehash"
+RUN su buildbox /bin/bash --login -c "rbenv install 2.1.0 && rbenv local 2.1.0 && gem install bundler && rbenv rehash"
+RUN su buildbox /bin/bash --login -c "rbenv install 2.1.1 && rbenv local 2.1.1 && gem install bundler && rbenv rehash"
+RUN su buildbox /bin/bash --login -c "rbenv global 2.1.1"
 
 # =====================================
 #
