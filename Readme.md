@@ -5,15 +5,11 @@ containers.
 
 ### How does it work?
 
-When you run the `buildbox-docker` command, it will monitor agents you specify
-on Buildbox and look for new jobs for them to perform. When a new job becomes a
-available, it will first make sure the container has been build, and then run the
-bootstrap.sh script inside the container with all the correct ENV varaibles set.
-
-### How secure is this?
-
-Docker containers are super secure. See:
-http://blog.docker.io/2013/08/containers-docker-how-secure-are-they/
+When you run the `buildbox-docker` command, it will monitor the agent you specify
+on Buildbox and look for new jobs for it to perform. When a new job becomes a
+available, it will boot the `buildbox-agent` process inside the container, and force
+it to run the job. When the job finishes, the container shuts down, and the `buildbox-docker`
+tool will start looking for new work again.
 
 ### Setup
 
