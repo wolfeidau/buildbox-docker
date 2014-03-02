@@ -30,7 +30,8 @@ cd buildbox-docker
 docker build -rm .
 docker tag [commit] buildboxhq/base
 
-# TODO: how to get buildbox-docker installed?
+# Install buildbox-docker
+bash -c "`curl -sL https://raw.github.com/buildboxhq/buildbox-docker/master/install.sh`"
 
 # Run the process
 buildbox-docker --access-token [access-token]
