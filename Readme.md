@@ -18,6 +18,10 @@ http://blog.docker.io/2013/08/containers-docker-how-secure-are-they/
 ### Setup
 
 ```bash
+# First thing you need to do is setup docker on the machine. See: 
+# https://github.com/buildboxhq/buildbox-docker#setting-up-the-host-machine-ubuntu-64-bit-only
+# for more information on how to do this.
+
 # Get the repo
 git clone https://github.com/buildboxhq/buildbox-docker
 cd buildbox-docker
@@ -25,6 +29,8 @@ cd buildbox-docker
 # Build the image
 docker build -rm .
 docker tag [commit] buildboxhq/base
+
+# TODO: how to get buildbox-docker installed?
 
 # Run the process
 buildbox-docker --access-token [access-token]
