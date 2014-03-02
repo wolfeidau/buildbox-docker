@@ -125,6 +125,8 @@ func start(name string, client buildbox.Client, options Options) {
     } else {
       // Do we have a job to perform?
       if job.ID != "" {
+        log.Printf("Worker (%s) is performing job %s", name, job.ID)
+
         err = run(client, job, options)
         if err != nil {
           log.Printf("Failed to run job: %s\n", err)
