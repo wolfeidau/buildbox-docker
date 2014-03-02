@@ -129,7 +129,7 @@ func start(name string, client buildbox.Client, options Options) {
 
         err = run(client, job, options)
         if err != nil {
-          log.Printf("Failed to run job: %s\n", err)
+          log.Printf("Failed to run job %s (%s)", job.ID, err)
         }
 
         log.Printf("Worker (%s) is now free", name)
