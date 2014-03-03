@@ -13,6 +13,31 @@ tool will start looking for new work again.
 
 ### Setup
 
+#### Installing Docker (Ubuntu 64-bit only)
+
+Source: http://docs.docker.io/en/latest/installation/ubuntulinux/#ubuntu-raring-13-04-and-saucy-13-10-64-bit
+
+If you're running `buildbox-docker` on OSX, see the notes below.
+
+```
+# Update and install some stuff that docker needs
+sudo apt-get update
+
+# Ubuntu Raring 13.04 and Saucy 13.10 (64 bit)
+sudo apt-get -y install linux-image-extra-`uname -r`
+
+# Ubuntu Precise 12.04 (LTS) (64-bit)
+sudo apt-get install linux-image-generic-lts-raring linux-headers-generic-lts-raring
+
+# Install docker
+sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 36A1D7869245C8950F966E92D8576A8BA88D21E9
+sudo sh -c "echo deb http://get.docker.io/ubuntu docker main > /etc/apt/sources.list.d/docker.list"
+sudo apt-get update
+sudo apt-get -y install lxc-docker
+```
+
+#### Setting up buildbox-docker
+
 ```bash
 # First thing you need to do is setup docker on the machine. See: 
 # https://github.com/buildboxhq/buildbox-docker#setting-up-the-host-machine-ubuntu-64-bit-only
@@ -33,62 +58,42 @@ bash -c "`curl -sL https://raw.github.com/buildboxhq/buildbox-docker/master/inst
 buildbox-docker --access-token [access-token]
 ```
 
-### Running on OSX
+#### Running on OSX
 
-Installing docker is pretty easy:
+Installing docker tool is pretty easy, however note that the containers don't _actaully_ run on OSX as it only works on Linux at the moment. You need to have Vagrant installed so we can bootup a linux virtual machine.
+
+You'll also need VirtualBox installed (needs version 4.2) https://www.virtualbox.org/wiki/Download_Old_Builds_4_2
 
 ```
+# Install the docker tool
 brew tap homebrew/binary
 brew install docker
-```
 
-Install VirtualBox (needs version 4.2) https://www.virtualbox.org/wiki/Download_Old_Builds_4_2
+# Get vargant installed
+gem install vagrant
 
-```
+# Setting up the vargant machine
+git clone https://github.com/buildboxhq/buildbox-docker
+cd buildbox-docker
 vagrant up
 vagrant ssh
 
-# After setting up vagrant using the steps below, we need to change how the docker daemon is run.
-# By default, the daemon runs on a unix socker, but we can't access that from OSX. So if we change it
-# to run on a TCP socker, and foward ports in Vagrant, it should 'just work'
+# Now you can follow the Linux steps above. Continue when that's done.
+
+# After setting up docker, we need to change how the docker daemon is run.
+# By default, the daemon runs on a unix socket, but we can't access that from OSX. So we need to change it
+# to run on a TCP socket, and foward ports in Vagrant.
 #
 # Warning: Don't run this on a production system. You don't want to expose docker like this there.
 sudo sed -i 's/^#DOCKER_OPTS.*/DOCKER_OPTS="-H tcp:\/\/0.0.0.0:4243 -H unix:\/\/var\/run\/docker.sock"/g' /etc/default/docker
 
-# Now you can restat, and you should be able to:
-
+# Now you can restat the vagarnt VM, and you should be able to from OSX:
+#
 #   export DOCKER_HOST=tcp://0.0.0.0:4243
 #   docker ps
 #
-# from OSX and
+# and inside the VM:
 #
 #   sudo docker ps
-#
-# on the VM
 ```
 
-### Setting up the host machine (Ubuntu 64-bit only)
-
-Source: http://docs.docker.io/en/latest/installation/ubuntulinux/#ubuntu-raring-13-04-and-saucy-13-10-64-bit
-
-```
-# Update and install some stuff that docker needs
-sudo apt-get update
-
-# Ubuntu Raring 13.04 and Saucy 13.10 (64 bit)
-sudo apt-get -y install linux-image-extra-`uname -r`
-
-# Ubuntu Precise 12.04 (LTS) (64-bit)
-sudo apt-get install linux-image-generic-lts-raring linux-headers-generic-lts-raring
-
-# Install docker
-sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 36A1D7869245C8950F966E92D8576A8BA88D21E9
-sudo sh -c "echo deb http://get.docker.io/ubuntu docker main > /etc/apt/sources.list.d/docker.list"
-sudo apt-get update
-sudo apt-get -y install lxc-docker
-
-# If you're on OSX, this is the part where we hack . See above for more details.
-
-# Forces a reboot after updating all the things
-sudo shutdown -r now
-```
