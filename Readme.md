@@ -17,9 +17,7 @@ tool will start looking for new work again.
 
 Source: http://docs.docker.io/en/latest/installation/ubuntulinux/#ubuntu-raring-13-04-and-saucy-13-10-64-bit
 
-If you're running `buildbox-docker` on OSX, see the notes below.
-
-```
+```bash
 # Update and install some stuff that docker needs
 sudo apt-get update
 
@@ -39,10 +37,6 @@ sudo apt-get -y install lxc-docker
 #### Setting up buildbox-docker
 
 ```bash
-# First thing you need to do is setup docker on the machine. See: 
-# https://github.com/buildboxhq/buildbox-docker#setting-up-the-host-machine-ubuntu-64-bit-only
-# for more information on how to do this.
-
 # Get the repo
 git clone https://github.com/buildboxhq/buildbox-docker
 cd buildbox-docker
@@ -64,7 +58,7 @@ Installing docker tool is pretty easy, however note that the containers don't _a
 
 You'll also need VirtualBox installed (needs version 4.2) https://www.virtualbox.org/wiki/Download_Old_Builds_4_2
 
-```
+```bash
 # Install the docker tool
 brew tap homebrew/binary
 brew install docker
