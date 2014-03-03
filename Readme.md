@@ -1,4 +1,4 @@
-# Buildbox Docker
+# buildbox-docker
 
 The Builbdox Docker toolset allows you to have agents start/stop within Docker
 containers.
