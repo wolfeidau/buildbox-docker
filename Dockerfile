@@ -40,11 +40,6 @@ RUN sudo usermod -a -G sudo buildbox
 RUN sudo usermod -a -G sudo buildbox
 RUN echo 'ALL ALL = (ALL) NOPASSWD: ALL' >> /etc/sudoers
 
-# Setup SSH for the user
-RUN mkdir -p /home/buildbox/.ssh
-ADD ssh/known_hosts /etc/ssh/ssh_known_hosts
-RUN chmod 644 /etc/ssh/ssh_known_hosts
-
 # =====================================
 #
 # Node.js
@@ -146,6 +141,16 @@ RUN mkdir /var/lib/redis
 ADD redis/redis /etc/init.d/redis
 ADD redis/redis.conf /etc/redis/redis.conf
 RUN chmod 755 /etc/init.d/redis
+
+# =====================================
+#
+# SSH Known Hosts
+#
+# =====================================
+
+RUN mkdir -p /home/buildbox/.ssh
+ADD ssh/known_hosts /etc/ssh/ssh_known_hosts
+RUN chmod 644 /etc/ssh/ssh_known_hosts
 
 # =====================================
 #
