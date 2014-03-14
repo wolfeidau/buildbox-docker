@@ -29,7 +29,7 @@ RUN sudo useradd buildbox --shell /bin/bash --create-home
 # Install the agent
 RUN apt-get install -y --force-yes curl
 RUN mkdir -p /home/buildbox/.buildbox
-RUN DESTINATION=/home/buildbox/.buildbox bash -c "`curl -sL https://raw.github.com/buildboxhq/agent-go/master/install.sh`"
+RUN DESTINATION=/home/buildbox/.buildbox bash -c "`curl -sL https://raw.github.com/buildboxhq/buildbox-agent/master/install.sh`"
 ADD bootstrap.sh /home/buildbox/.buildbox/bootstrap.sh
 RUN chmod +x /home/buildbox/.buildbox/bootstrap.sh
 RUN chown -R buildbox:buildbox /home/buildbox/.buildbox

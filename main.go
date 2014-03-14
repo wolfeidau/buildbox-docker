@@ -9,7 +9,7 @@ import (
   "errors"
   "sync"
   "github.com/codegangsta/cli"
-  "github.com/buildboxhq/agent-go/buildbox"
+  "github.com/buildboxhq/buildbox-agent/buildbox"
 )
 
 var AppHelpTemplate = `TODO
