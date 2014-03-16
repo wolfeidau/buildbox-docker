@@ -34,6 +34,7 @@ ADD bootstrap.sh /home/buildbox/.buildbox/bootstrap.sh
 RUN chmod +x /home/buildbox/.buildbox/bootstrap.sh
 RUN chown -R buildbox:buildbox /home/buildbox/.buildbox
 RUN ln -s /home/buildbox/.buildbox/buildbox-agent /usr/local/bin
+RUN echo 'export PATH="$HOME/.buildbox:$PATH"' >> /home/buildbox/.profile
 
 # Allow passwordless sudo
 RUN sudo usermod -a -G sudo buildbox
