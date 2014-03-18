@@ -91,3 +91,10 @@ sudo sed -i 's/^#DOCKER_OPTS.*/DOCKER_OPTS="-H tcp:\/\/0.0.0.0:4243 -H unix:\/\/
 #   sudo docker ps
 ```
 
+#### Debugging
+
+```
+sudo docker run -name testcontainer123 -i -t buildboxhq/base /bin/bash
+sudo docker commit 040048f4ec52 testimage123
+sudo docker run -i -u buildbox -w "/home/buildbox" -t testimage123 /bin/bash
+```

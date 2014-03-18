@@ -2,4 +2,4 @@
 set -e
 set -x
 
-docker build -t buildboxhq/base .
+docker build --no-cache --rm true -t buildboxhq/base .
