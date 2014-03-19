@@ -172,7 +172,19 @@ RUN chmod +x /home/buildbox/.buildbox/bootstrap.sh && \
 
 # =====================================
 #
-# SSH
+# SSH Sever
+#
+# =====================================
+
+RUN apt-get install -y openssh-server && \
+    mkdir /var/run/sshd  && \
+    echo 'root:buildbox' | chpasswd
+
+EXPOSE 22
+
+# =====================================
+#
+# SSH for Buildbox
 #
 # =====================================
 
@@ -183,11 +195,8 @@ RUN chmod 644 /etc/ssh/ssh_known_hosts
 
 # =====================================
 #
-# Defaults
+# Start the OS
 #
 # =====================================
-
-# Drop privileges so commands can only be run as buildbox
-ENV HOME /home/buildbox
-WORKDIR /home/buildbox
-USER buildbox
+# CMD /sbin/init
+# CMD    /usr/sbin/sshd -D

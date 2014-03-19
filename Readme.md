@@ -94,6 +94,12 @@ sudo sed -i 's/^#DOCKER_OPTS.*/DOCKER_OPTS="-H tcp:\/\/0.0.0.0:4243 -H unix:\/\/
 #### Debugging
 
 ```
+CONTAINER_ID=$(docker run -i -p 22 -d buildboxhq/base)
+docker port $CONTAINER_ID 22
+docker stop $CONTAINER_ID
+
+sudo docker run -i -t buildboxhq/base /bin/bash
+
 sudo docker run -name testcontainer123 -i -t buildboxhq/base /bin/bash
 sudo docker commit 040048f4ec52 testimage123
 sudo docker run -i -u buildbox -w "/home/buildbox" -t testimage123 /bin/bash
