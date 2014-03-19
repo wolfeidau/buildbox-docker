@@ -18,7 +18,7 @@ function buildbox-run {
 echo '--- setup environment'
 
 # Boot up stuff that isn't by default started in the container
-buildbox-run "sudo service mysql start"
+buildbox-run "sudo mysqld_safe &"
 buildbox-run "sudo /etc/init.d/postgresql start"
 buildbox-run "sudo /etc/init.d/redis start"
 

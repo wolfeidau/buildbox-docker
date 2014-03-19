@@ -148,7 +148,7 @@ RUN apt-get -y --force-yes -q install mysql-server mysql-client libmysqlclient-d
 #
 # =====================================
 
-RUN apt-get -y --force-yes -q install python-sphinx
+RUN apt-get -y --force-yes -q install sphinxsearch
 
 # =====================================
 #
