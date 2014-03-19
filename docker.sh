@@ -2,4 +2,4 @@
 set -e
 set -x
 
-docker build --no-cache --rm --tag "buildboxhq/base" .
+docker build --tag "buildboxhq/base" .
