@@ -140,7 +140,7 @@ RUN chmod 755 /etc/init.d/redis
 #
 # =====================================
 
-RUN apt-get -y --force-yes -q install mysql-server mysql-client
+RUN apt-get -y --force-yes -q install mysql-server mysql-client libmysqlclient-dev
 
 # =====================================
 #
