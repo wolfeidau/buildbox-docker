@@ -114,6 +114,14 @@ RUN cd /tmp && curl -L -O https://bitbucket.org/ariya/phantomjs/downloads/phanto
 
 # =====================================
 #
+# Webkit
+#
+# =====================================
+
+RUN apt-get -y --force-yes -q install libqtwebkit-dev
+
+# =====================================
+#
 # ImageMagick
 #
 # =====================================
@@ -150,6 +158,46 @@ RUN apt-get -y --force-yes -q install mysql-server mysql-client libmysqlclient-d
 # =====================================
 
 RUN apt-get -y --force-yes -q install sphinxsearch
+
+# =====================================
+#
+# XVFB
+#
+# =====================================
+
+RUN apt-get -y --force-yes -q install xvfb
+
+# =====================================
+#
+# Chromedriver
+#
+# =====================================
+
+RUN apt-get -y --force-yes -q install unzip libgtk2.0-0 libnss3 libgconf2-4 && \
+      cd /tmp &&
+      curl -L -O http://chromedriver.storage.googleapis.com/2.6/chromedriver_linux32.zip && \
+      unzip chromedriver_linux32.zip && \
+      mv chromedriver /usr/local/bin
+
+# =====================================
+#
+# Chrome
+#
+# =====================================
+
+RUN apt-get -y --force-yes -q install wget && \
+      wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && \
+      echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list && \
+      apt-get update && \
+      apt-get install google-chrome-stable
+
+# =====================================
+#
+# Firefox
+#
+# =====================================
+
+RUN apt-get -y --force-yes -q install firefox
 
 # =====================================
 #

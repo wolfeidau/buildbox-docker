@@ -21,6 +21,7 @@ echo '--- setup environment'
 buildbox-run "sudo mysqld_safe &"
 buildbox-run "sudo /etc/init.d/postgresql start"
 buildbox-run "sudo /etc/init.d/redis start"
+buildbox-run "xvfb :99 -ac & export DISPLAY=:99"
 
 # Setup the SSH keys for this agent
 echo "$BUILDBOX_AGENT_SSH_PRIVATE_KEY" >> ~/.ssh/id_rsa
