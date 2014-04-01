@@ -173,7 +173,7 @@ RUN apt-get -y --force-yes -q install wget
 #
 # =====================================
 
-RUN apt-get -y --force-yes -q install xvfb
+RUN apt-get -y --force-yes -q install xvfb x11-xkb-utils xfonts-100dpi xfonts-75dpi xfonts-scalable xfonts-cyrillic
 
 # =====================================
 #
@@ -183,7 +183,8 @@ RUN apt-get -y --force-yes -q install xvfb
 
 RUN apt-get -y --force-yes -q install chromium-browser wget unzip && \
       cd /tmp && curl -L -O http://chromedriver.storage.googleapis.com/2.6/chromedriver_linux32.zip && \
-      unzip /tmp/chromedriver_linux32.zip && \
+      unzip /tmp/chromedriver_linux32.zip -d /tmp && \
+      ls -lsa /tmp && \
       mv /tmp/chromedriver /usr/local/bin
 
 # =====================================
