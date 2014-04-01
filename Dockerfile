@@ -161,6 +161,14 @@ RUN apt-get -y --force-yes -q install sphinxsearch
 
 # =====================================
 #
+# Random Packages
+#
+# =====================================
+
+RUN apt-get -y --force-yes -q install wget
+
+# =====================================
+#
 # XVFB
 #
 # =====================================
@@ -169,27 +177,14 @@ RUN apt-get -y --force-yes -q install xvfb
 
 # =====================================
 #
-# Chromedriver
-#
-# =====================================
-
-RUN apt-get -y --force-yes -q install unzip libgtk2.0-0 libnss3 libgconf2-4 && \
-      cd /tmp &&
-      curl -L -O http://chromedriver.storage.googleapis.com/2.6/chromedriver_linux32.zip && \
-      unzip chromedriver_linux32.zip && \
-      mv chromedriver /usr/local/bin
-
-# =====================================
-#
 # Chrome
 #
 # =====================================
 
-RUN apt-get -y --force-yes -q install wget && \
-      wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && \
-      echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list && \
-      apt-get update && \
-      apt-get install google-chrome-stable
+RUN apt-get -y --force-yes -q install chromium-browser wget unzip && \
+      cd /tmp && curl -L -O http://chromedriver.storage.googleapis.com/2.6/chromedriver_linux32.zip && \
+      unzip /tmp/chromedriver_linux32.zip && \
+      mv /tmp/chromedriver /usr/local/bin
 
 # =====================================
 #
