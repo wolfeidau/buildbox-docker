@@ -1,9 +1,8 @@
-FROM ubuntu:precise
+FROM ubuntu:12.04
 
-# Upgrade and update all the things
+# Make sure the package repository is up to date
 RUN echo "deb http://archive.ubuntu.com/ubuntu precise main universe" > /etc/apt/sources.list && \
-      apt-get update && \
-      apt-get -y --force-yes upgrade
+      apt-get update
 
 # Set up the environment
 ENV DEBIAN_FRONTEND noninteractive
@@ -165,7 +164,7 @@ RUN apt-get -y --force-yes -q install sphinxsearch
 #
 # =====================================
 
-RUN apt-get -y --force-yes -q install wget
+RUN apt-get -y --force-yes -q install wget ntp
 
 # =====================================
 #
@@ -177,14 +176,28 @@ RUN apt-get -y --force-yes -q install xvfb x11-xkb-utils xfonts-100dpi xfonts-75
 
 # =====================================
 #
+# ChromeDriver
+# https://code.google.com/p/selenium/wiki/ChromeDriver#Requirements
+#
+# =====================================
+
+RUN apt-get -y --force-yes -q install wget unzip && \
+      cd /tmp && curl -L -O http://chromedriver.storage.googleapis.com/2.6/chromedriver_linux64.zip && \
+      unzip /tmp/chromedriver_linux64.zip -d /usr/local/bin && \
+      chmod a+x /usr/local/bin/chromedriver
+
+# =====================================
+#
 # Chrome
 #
 # =====================================
 
-RUN apt-get -y --force-yes -q install chromium-browser wget unzip && \
-      cd /tmp && curl -L -O http://chromedriver.storage.googleapis.com/2.6/chromedriver_linux64.zip && \
-      unzip /tmp/chromedriver_linux64.zip -d /usr/local/bin && \
-      chmod a+x /usr/local/bin/chromedriver
+RUN apt-get -y --force-yes -q install wget && \
+      wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add - && \
+      echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list && \
+      echo "deb http://security.ubuntu.com/ubuntu precise-security main" >> /etc/apt/sources.list && \
+      apt-get update && \
+      apt-get install -y --force-yes -q google-chrome-stable
 
 # =====================================
 #
