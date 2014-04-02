@@ -182,7 +182,7 @@ RUN apt-get -y --force-yes -q install xvfb x11-xkb-utils xfonts-100dpi xfonts-75
 # =====================================
 
 RUN apt-get -y --force-yes -q install wget unzip && \
-      cd /tmp && curl -L -O http://chromedriver.storage.googleapis.com/2.6/chromedriver_linux64.zip && \
+      cd /tmp && curl -L -O http://chromedriver.storage.googleapis.com/2.9/chromedriver_linux64.zip && \
       unzip /tmp/chromedriver_linux64.zip -d /usr/local/bin && \
       chmod a+x /usr/local/bin/chromedriver
 
