@@ -225,7 +225,8 @@ ADD bootstrap.sh /home/buildbox/.buildbox/bootstrap.sh
 RUN chmod +x /home/buildbox/.buildbox/bootstrap.sh && \
       chown -R buildbox:buildbox /home/buildbox/.buildbox && \
       ln -s /home/buildbox/.buildbox/buildbox-agent /usr/local/bin && \
-      ln -s /home/buildbox/.buildbox/buildbox-artifact /usr/local/bin
+      ln -s /home/buildbox/.buildbox/buildbox-artifact /usr/local/bin && \
+      ln -s /home/buildbox/.buildbox/buildbox-data /usr/local/bin
 
 # =====================================
 #
