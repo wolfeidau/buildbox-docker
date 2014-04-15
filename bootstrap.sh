@@ -43,6 +43,7 @@ buildbox-run "cd $BUILDBOX_BUILD_DIR"
 # Do we need to do a git checkout?
 if [ ! -d ".git" ]
 then
+  buildbox-run "ssh -Tvv git@github.com"
   buildbox-run "git clone "$BUILDBOX_REPO" . -qv"
 fi
 
