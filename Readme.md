@@ -3,6 +3,8 @@
 The Builbdox Docker toolset allows you to have agents start/stop within Docker
 containers.
 
+**Note: This project should be considered alpha, and will probably change soon. Feel free to hack and poke around, but it's not quite ready for production use just yet.**
+
 ### How does it work?
 
 When you run the `buildbox-docker` command, it will monitor the agent you specify
