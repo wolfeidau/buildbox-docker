@@ -152,6 +152,31 @@ RUN apt-get -y --force-yes -q install mysql-server mysql-client libmysqlclient-d
 
 # =====================================
 #
+# Java (Headless)
+#
+# =====================================
+
+RUN apt-get update -y && apt-get -y --force-yes -q install openjdk-7-jre-headless
+
+# =====================================
+#
+# Python + AWS CLI
+#
+# =====================================
+
+RUN apt-get update -y && apt-get -y --force-yes -q install python-pip && pip install awscli
+
+# =====================================
+#
+# Scala + SBT
+#
+# =====================================
+
+RUN cd /tmp && curl -L -O http://www.scala-lang.org/files/archive/scala-2.11.0.deb && dpkg -i scala-2.11.0.deb
+RUN cd /tmp && curl -L -O http://dl.bintray.com/sbt/debian/sbt-0.13.2.deb && dpkg -i sbt-0.13.2.deb
+
+# =====================================
+#
 # Sphinx
 #
 # =====================================
