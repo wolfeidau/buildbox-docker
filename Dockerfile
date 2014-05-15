@@ -152,11 +152,11 @@ RUN apt-get -y --force-yes -q install mysql-server mysql-client libmysqlclient-d
 
 # =====================================
 #
-# Java (Headless)
+# Java
 #
 # =====================================
 
-RUN apt-get update -y && apt-get -y --force-yes -q install openjdk-7-jre-headless
+RUN apt-get update -y && apt-get -y --no-install-recommends -q install openjdk-7-jdk
 
 # =====================================
 #
