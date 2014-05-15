@@ -152,6 +152,22 @@ RUN apt-get -y --force-yes -q install mysql-server mysql-client libmysqlclient-d
 
 # =====================================
 #
+# Java (Headless)
+#
+# =====================================
+
+RUN apt-get -y --force-yes -q install openjdk-7-jre-headless
+
+# =====================================
+#
+# Python + AWS CLI
+#
+# =====================================
+
+RUN apt-get -y --force-yes -q install python-pip && pip install awscli
+
+# =====================================
+#
 # Sphinx
 #
 # =====================================
