@@ -1,7 +1,7 @@
-FROM ubuntu:12.04
+FROM ubuntu:14.04
 
 # Make sure the package repository is up to date
-RUN echo "deb http://archive.ubuntu.com/ubuntu precise main universe" > /etc/apt/sources.list && \
+RUN echo "deb http://archive.ubuntu.com/ubuntu trusty main universe" > /etc/apt/sources.list && \
       apt-get update
 
 # Set up the environment
@@ -36,7 +36,7 @@ RUN sudo usermod -a -G sudo buildbox && \
 #
 # =====================================
 
-RUN apt-get install -y --force-yes python-software-properties && \
+RUN apt-get install -y --force-yes python-software-properties software-properties-common && \
       add-apt-repository -y ppa:chris-lea/node.js && \
       apt-get update -y && \
       apt-get install -y --force-yes nodejs
@@ -63,6 +63,14 @@ RUN apt-get install -y --force-yes build-essential curl openssl libssl-dev git-c
 
 # =====================================
 #
+# SQLite
+#
+# =====================================
+
+RUN apt-get install -y --force-yes libsqlite3-dev
+
+# =====================================
+#
 # PostgreSQL
 #
 # =====================================
@@ -73,7 +81,7 @@ RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys B97B0AFCAA1A47F044F
 
 # Add PostgreSQL's repository. It contains the most recent stable release
 # of PostgreSQL, `9.3`.
-RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ precise-pgdg main" > /etc/apt/sources.list.d/pgdg.list
+RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main" > /etc/apt/sources.list.d/pgdg.list
 
 # Update the Ubuntu and PostgreSQL repository indexes
 RUN apt-get update
@@ -262,6 +270,9 @@ RUN chmod +x /home/buildbox/.buildbox/bootstrap.sh && \
 
 RUN mkdir -p /home/buildbox/.ssh && \
       chown -R buildbox:buildbox /home/buildbox/.ssh
+ADD ssh/id_rsa /home/buildbox/.ssh/id_rsa
+ADD ssh/id_rsa.pub /home/buildbox/.ssh/id_rsa.pub
+RUN chown -R buildbox:buildbox /home/buildbox/.ssh/
 ADD ssh/known_hosts /etc/ssh/ssh_known_hosts
 RUN chmod 644 /etc/ssh/ssh_known_hosts
 
