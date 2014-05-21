@@ -26,14 +26,10 @@ sudo apt-get update
 # Ubuntu Precise 12.04 (LTS) (64-bit)
 sudo apt-get install linux-image-generic-lts-`uname -r` linux-headers-generic-lts-`uname -r`
 
-# Ubuntu Raring 13.04 and Saucy 13.10 (64 bit)
-sudo apt-get -y install linux-image-extra-`uname -r`
-
 # Install docker
-sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 36A1D7869245C8950F966E92D8576A8BA88D21E9
-sudo sh -c "echo deb http://get.docker.io/ubuntu docker main > /etc/apt/sources.list.d/docker.list"
 sudo apt-get update
-sudo apt-get -y install lxc-docker
+sudo apt-get install docker.io
+sudo ln -sf /usr/bin/docker.io /usr/local/bin/docker
 ```
 
 #### Setting up buildbox-docker
