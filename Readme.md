@@ -24,7 +24,7 @@ Source: http://docs.docker.io/installation/ubuntulinux/#ubuntu-trusty-1404-lts-6
 sudo apt-get update
 
 # Ubuntu Precise 12.04 (LTS) (64-bit)
-sudo apt-get install linux-image-generic-lts-raring linux-headers-generic-lts-raring
+sudo apt-get install linux-image-generic-lts-`uname -r` linux-headers-generic-lts-`uname -r`
 
 # Ubuntu Raring 13.04 and Saucy 13.10 (64 bit)
 sudo apt-get -y install linux-image-extra-`uname -r`
