@@ -58,7 +58,8 @@ RUN apt-get install -y --force-yes build-essential curl openssl libssl-dev git-c
       su buildbox /bin/bash --login -c "rbenv install 2.0.0-p247 && rbenv local 2.0.0-p247 && gem install bundler && rbenv rehash" && \
       su buildbox /bin/bash --login -c "rbenv install 2.1.0 && rbenv local 2.1.0 && gem install bundler && rbenv rehash" && \
       su buildbox /bin/bash --login -c "rbenv install 2.1.1 && rbenv local 2.1.1 && gem install bundler && rbenv rehash" && \
-      su buildbox /bin/bash --login -c "rbenv global 2.1.1"
+      su buildbox /bin/bash --login -c "rbenv install 2.1.2 && rbenv local 2.1.2 && gem install bundler && rbenv rehash" && \
+      su buildbox /bin/bash --login -c "rbenv global 2.1.2"
 
 # =====================================
 #
