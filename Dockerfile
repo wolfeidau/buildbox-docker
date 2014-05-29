@@ -138,6 +138,14 @@ RUN apt-get -y --force-yes -q install imagemagick libjpeg8-dev libpng12-dev
 
 # =====================================
 #
+# Memcached
+#
+# =====================================
+
+RUN apt-get -y --force-yes -q install memcached
+
+# =====================================
+#
 # Redis
 #
 # =====================================
