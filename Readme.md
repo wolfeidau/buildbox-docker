@@ -17,23 +17,19 @@ tool will start looking for new work again.
 
 #### Installing Docker (Ubuntu 64-bit only)
 
-Source: http://docs.docker.io/en/latest/installation/ubuntulinux/#ubuntu-raring-13-04-and-saucy-13-10-64-bit
+Source: http://docs.docker.io/installation/ubuntulinux/#ubuntu-trusty-1404-lts-64-bit
 
 ```bash
 # Update and install some stuff that docker needs
 sudo apt-get update
 
-# Ubuntu Raring 13.04 and Saucy 13.10 (64 bit)
-sudo apt-get -y install linux-image-extra-`uname -r`
-
 # Ubuntu Precise 12.04 (LTS) (64-bit)
-sudo apt-get install linux-image-generic-lts-raring linux-headers-generic-lts-raring
+sudo apt-get install linux-image-generic-lts-`uname -r` linux-headers-generic-lts-`uname -r`
 
 # Install docker
-sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 36A1D7869245C8950F966E92D8576A8BA88D21E9
-sudo sh -c "echo deb http://get.docker.io/ubuntu docker main > /etc/apt/sources.list.d/docker.list"
 sudo apt-get update
-sudo apt-get -y install lxc-docker
+sudo apt-get install docker.io
+sudo ln -sf /usr/bin/docker.io /usr/local/bin/docker
 ```
 
 #### Setting up buildbox-docker
@@ -43,15 +39,18 @@ sudo apt-get -y install lxc-docker
 git clone https://github.com/buildboxhq/buildbox-docker
 cd buildbox-docker
 
+# Add SSH key pairs - generate or copy SSH keys into the "ssh" directory
+ssh-keygen -t rsa -f ssh/id_rsa
+
 # Build the image
-docker build -rm .
-docker tag [commit] buildboxhq/base
+docker build --rm .
+docker tag [docker-image-id] buildboxhq/base
 
 # Install buildbox-docker
 bash -c "`curl -sL https://raw.github.com/buildboxhq/buildbox-docker/master/install.sh`"
 
 # Run the process
-buildbox-docker --access-token [access-token]
+buildbox-docker --access-token [buildbox-agent-access-token]
 ```
 
 #### Running on OSX
