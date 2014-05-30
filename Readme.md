@@ -24,7 +24,7 @@ Source: http://docs.docker.io/installation/ubuntulinux/#ubuntu-trusty-1404-lts-6
 sudo apt-get update
 
 # Ubuntu Precise 12.04 (LTS) (64-bit)
-sudo apt-get install linux-image-generic-lts-`uname -r` linux-headers-generic-lts-`uname -r`
+sudo apt-get install linux-image-generic-lts-trusty linux-headers-generic-lts-trusty
 
 # Install docker
 sudo apt-get update
@@ -43,8 +43,7 @@ cd buildbox-docker
 ssh-keygen -t rsa -f ssh/id_rsa
 
 # Build the image
-docker build --rm .
-docker tag [docker-image-id] buildboxhq/base
+docker build --rm --tag buildboxhq/base.
 
 # Install buildbox-docker
 bash -c "`curl -sL https://raw.github.com/buildboxhq/buildbox-docker/master/install.sh`"
