@@ -1,8 +1,9 @@
 FROM ubuntu:14.04
 
 # Make sure the package repository is up to date
-RUN echo "deb http://archive.ubuntu.com/ubuntu trusty main universe" > /etc/apt/sources.list && \
-      apt-get update
+RUN echo "deb http://archive.ubuntu.com/ubuntu trusty main universe\n" > /etc/apt/sources.list
+RUN echo "deb http://archive.ubuntu.com/ubuntu trusty-updates main universe\n" >> /etc/apt/sources.list
+RUN apt-get update
 
 # Set up the environment
 ENV DEBIAN_FRONTEND noninteractive
