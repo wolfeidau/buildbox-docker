@@ -279,6 +279,7 @@ RUN chmod +x /home/buildbox/.buildbox/bootstrap.sh && \
 
 ADD ssh/ /home/buildbox/.ssh/
 RUN chown -R buildbox:buildbox /home/buildbox/.ssh/
+RUN chmod 600 /home/buildbox/.ssh/*
 ADD ssh/known_hosts /etc/ssh/ssh_known_hosts
 RUN chmod 644 /etc/ssh/ssh_known_hosts
 
