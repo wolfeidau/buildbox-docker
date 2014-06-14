@@ -256,8 +256,7 @@ RUN apt-get -y --force-yes -q install firefox
 #
 # =====================================
 
-RUN apt-get -y --force-yes -q install curl git-core mercurial make binutils bison gcc build-essential && \
-      su buildbox /bin/bash --login -c "bash < <(curl -s -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer)"
+RUN apt-get -y --force-yes -q install golang
 
 # =====================================
 #
