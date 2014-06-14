@@ -64,22 +64,18 @@ func main() {
 
     // Set the agent options
     var agent buildbox.Agent;
-    agent.Debug = c.Bool("debug")
 
     // Client specific options
     agent.Client.AgentAccessToken = c.String("access-token")
     agent.Client.URL = c.String("url")
-    agent.Client.Debug = agent.Debug
 
     // Job specific options
     var options Options
     options.Memory = c.String("memory")
     options.Container = c.String("docker-container")
 
-    // Tell the user that debug mode has been enabled
-    if agent.Debug {
-      log.Printf("Debug mode enabled")
-    }
+    // Always in debug mode
+    buildbox.LoggerInitDebug()
 
     // Setup the agent
     agent.Setup()
@@ -158,7 +154,7 @@ func run(client buildbox.Client, job *buildbox.Job, options Options) error {
   }
 
   // Create the command to run
-  agentCommand := fmt.Sprintf("buildbox-agent run %s --access-token %s --url %s", job.ID, agentAccessToken, client.URL)
+  agentCommand := fmt.Sprintf("buildbox-agent run %s --access-token %s --url %s --debug", job.ID, agentAccessToken, client.URL)
   memoryOption := fmt.Sprintf("--memory=%s", options.Memory)
   cmd := exec.Command("docker", "run", "--rm=true", memoryOption, options.Container, "/bin/bash", "--login", "-c", agentCommand)
 
