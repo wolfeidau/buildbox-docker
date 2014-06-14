@@ -252,6 +252,16 @@ RUN apt-get -y --force-yes -q install firefox
 
 # =====================================
 #
+# Golang
+#
+# =====================================
+
+RUN add-apt-repository ppa:gophers/go && \
+      apt-get update && \
+      apt-get install golang-stable
+
+# =====================================
+#
 # Buildbox Agent
 #
 # =====================================
