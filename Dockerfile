@@ -256,7 +256,11 @@ RUN apt-get -y --force-yes -q install firefox
 #
 # =====================================
 
-RUN apt-get -y --force-yes -q install golang
+RUN apt-get -y --force-yes -q install mercurial golang && \
+      mkdir /home/buildbox/.go && \
+      chown -R buildbox:buildbox /home/buildbox/.go && \
+      echo 'export GOPATH="/home/buildbox/.go"' >> /home/buildbox/.profile && \
+      echo 'export PATH="/home/buildbox/.go/bin:$PATH"' >> /home/buildbox/.profile
 
 # =====================================
 #
