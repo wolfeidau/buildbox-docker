@@ -79,7 +79,7 @@ vagrant ssh
 # to run on a TCP socket, and foward ports in Vagrant.
 #
 # Warning: Don't run this on a production system. You don't want to expose docker like this there.
-sudo sed -i 's/^#DOCKER_OPTS.*/DOCKER_OPTS="-H tcp:\/\/0.0.0.0:4243 -H unix:\/\/var\/run\/docker.sock"/g' /etc/default/docker
+sudo sed -i 's/^#DOCKER_OPTS.*/DOCKER_OPTS="-H tcp:\/\/0.0.0.0:4243 -H unix:\/\/var\/run\/docker.sock"/g' /etc/default/docker.io
 
 # Now you can restat the vagarnt VM, and you should be able to from OSX:
 #
