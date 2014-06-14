@@ -32,7 +32,7 @@ func main() {
 
   app := cli.NewApp()
   app.Name = "buildbox-docker"
-  app.Version = "0.1.alpha"
+  app.Version = "0.1.alpha.2"
 
   // Define the actions for our CLI
   app.Flags = []cli.Flag {
