@@ -20,7 +20,7 @@ echo -e "\033[33m
 
 -- https://buildbox.io
 
-Latest Version: \033[35mv0.1-alpha\033[0m"
+Latest Version: \033[35mv0.1-alpha.2\033[0m"
 
 UNAME=`uname -sp | awk '{print tolower($0)}'`
 
@@ -55,7 +55,7 @@ echo -e "Destination: \033[35m$DESTINATION\033[0m"
 
 # Download and unzip the file to the destination
 FILE=$DESTINATION/buildbox-docker
-URL="https://github.com/buildboxhq/buildbox-docker/releases/download/v0.1-alpha/buildbox-docker-$PLATFORM-$ARCH.gz"
+URL="https://github.com/buildboxhq/buildbox-docker/releases/download/v0.1-alpha.2/buildbox-docker-$PLATFORM-$ARCH.gz"
 echo -e "\nDownloading $URL"
 
 if command -v wget >/dev/null

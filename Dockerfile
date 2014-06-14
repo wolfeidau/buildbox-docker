@@ -256,9 +256,8 @@ RUN apt-get -y --force-yes -q install firefox
 #
 # =====================================
 
-RUN add-apt-repository ppa:gophers/go && \
-      apt-get update && \
-      apt-get install golang-stable
+RUN apt-get -y --force-yes -q install curl git-core mercurial make binutils bison gcc build-essential && \
+      su buildbox /bin/bash --login -c "bash < <(curl -s -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer)"
 
 # =====================================
 #
@@ -269,7 +268,7 @@ RUN add-apt-repository ppa:gophers/go && \
 # Install the agent
 RUN apt-get install -y --force-yes curl && \
       mkdir -p "/home/buildbox/.buildbox" && \
-      VERSION="0.2-beta.4" DESTINATION="/home/buildbox/.buildbox" bash -c "`curl -sL https://raw.github.com/buildboxhq/buildbox-agent/master/install.sh`"
+      VERSION="0.2-beta.7" DESTINATION="/home/buildbox/.buildbox" bash -c "`curl -sL https://raw.github.com/buildboxhq/buildbox-agent/master/install.sh`"
 
 # Add our custom boostrap.sh command
 ADD bootstrap.sh /home/buildbox/.buildbox/bootstrap.sh

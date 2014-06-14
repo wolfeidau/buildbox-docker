@@ -57,7 +57,7 @@ then
 fi
 
 buildbox-run "git clean -fdq"
-buildbox-run "git fetch -q"
+buildbox-run "git fetch -qv"
 buildbox-run "git reset --hard origin/$BUILDBOX_BRANCH"
 buildbox-run "git checkout -qf \"$BUILDBOX_COMMIT\""
 
