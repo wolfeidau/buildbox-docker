@@ -43,7 +43,7 @@ cd buildbox-docker
 ssh-keygen -t rsa -f ssh/id_rsa
 
 # Build the image
-docker build --rm --tag buildboxhq/base .
+sudo docker build --rm --tag buildboxhq/base .
 
 # Install buildbox-docker
 bash -c "`curl -sL https://raw.github.com/buildboxhq/buildbox-docker/master/install.sh`"
