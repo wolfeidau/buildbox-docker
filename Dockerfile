@@ -56,12 +56,12 @@ RUN apt-get install -y --force-yes build-essential curl openssl libssl-dev git-c
       echo 'gem: --no-rdoc --no-ri' >> /home/buildbox/.gemrc && \
       chown -R buildbox:buildbox /home/buildbox
 
-RUN su buildbox /bin/bash --login -c "rbenv install 1.9.3-p545 && rbenv local 1.9.3-p545 && gem update --system && gem install bundler && rbenv rehash"
-RUN su buildbox /bin/bash --login -c "rbenv install 2.0.0-p247 && rbenv local 2.0.0-p247 && gem update --system && gem install bundler && rbenv rehash"
-RUN su buildbox /bin/bash --login -c "rbenv install 2.1.0 && rbenv local 2.1.0 && gem update --system && gem install bundler && rbenv rehash"
-RUN su buildbox /bin/bash --login -c "rbenv install 2.1.1 && rbenv local 2.1.1 && gem update --system && gem install bundler && rbenv rehash"
-RUN su buildbox /bin/bash --login -c "rbenv install 2.1.2 && rbenv local 2.1.2 && gem update --system && gem install bundler && rbenv rehash"
-RUN su buildbox /bin/bash --login -c "rbenv global 2.1.2"
+RUN sudo su buildbox /bin/bash --login -c "rbenv install 1.9.3-p545 && rbenv local 1.9.3-p545 && gem update --system && gem install bundler && rbenv rehash"
+RUN sudo su buildbox /bin/bash --login -c "rbenv install 2.0.0-p247 && rbenv local 2.0.0-p247 && gem update --system && gem install bundler && rbenv rehash"
+RUN sudo su buildbox /bin/bash --login -c "rbenv install 2.1.0 && rbenv local 2.1.0 && gem update --system && gem install bundler && rbenv rehash"
+RUN sudo su buildbox /bin/bash --login -c "rbenv install 2.1.1 && rbenv local 2.1.1 && gem update --system && gem install bundler && rbenv rehash"
+RUN sudo su buildbox /bin/bash --login -c "rbenv install 2.1.2 && rbenv local 2.1.2 && gem update --system && gem install bundler && rbenv rehash"
+RUN sudo su buildbox /bin/bash --login -c "rbenv global 2.1.2"
 
 # =====================================
 #
