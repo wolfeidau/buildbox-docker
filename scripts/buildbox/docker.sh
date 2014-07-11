@@ -3,4 +3,4 @@ set -e
 set -x
 
 sudo docker build --tag "buildbox/base" .
-docker push buildbox/base
+sudo docker push buildbox/base
