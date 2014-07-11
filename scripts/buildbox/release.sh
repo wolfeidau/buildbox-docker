@@ -2,4 +2,4 @@
 set -e
 set -x
 
-docker build --tag "buildboxhq/base" .
+sudo docker build --tag "buildboxhq/base" .
