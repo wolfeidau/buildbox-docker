@@ -2,5 +2,5 @@
 set -e
 set -x
 
-sudo docker build --tag "buildboxhq/base" .
+sudo docker build --tag "buildbox/base" .
 docker push buildbox/base
