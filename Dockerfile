@@ -284,6 +284,8 @@ RUN chmod +x /home/buildbox/.buildbox/bootstrap.sh && \
       ln -s /home/buildbox/.buildbox/buildbox-artifact /usr/local/bin && \
       ln -s /home/buildbox/.buildbox/buildbox-data /usr/local/bin
 
+RUN echo '123'
+
 # =====================================
 #
 # SSH
