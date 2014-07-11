@@ -7,9 +7,8 @@ ln -s `pwd` gopath/src/github.com/buildboxhq/buildbox-docker
 export GOPATH="$GOPATH:`pwd`/gopath"
 
 echo '--- install dependencies'
-# go get github.com/tools/godep
-# godep restore
-go get
+go get github.com/tools/godep
+godep restore
 
 echo '--- building'
 ./scripts/build.sh
