@@ -272,7 +272,7 @@ RUN apt-get -y --force-yes -q install mercurial golang && \
 # Install the agent
 RUN apt-get install -y --force-yes curl && \
       mkdir -p "/home/buildbox/.buildbox" && \
-      VERSION="0.2-beta.12" DESTINATION="/home/buildbox/.buildbox" bash -c "`curl -sL https://raw.github.com/buildboxhq/buildbox-agent/master/install.sh`"
+      VERSION="0.2-beta.13" DESTINATION="/home/buildbox/.buildbox" bash -c "`curl -sL https://raw.github.com/buildboxhq/buildbox-agent/master/install.sh`"
 
 # Add our custom boostrap.sh command
 ADD bootstrap.sh /home/buildbox/.buildbox/bootstrap.sh
