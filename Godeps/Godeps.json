@@ -1,0 +1,34 @@
+{
+	"ImportPath": "github.com/buildboxhq/buildbox-docker",
+	"GoVersion": "go1.2.2",
+	"Deps": [
+		{
+			"ImportPath": "github.com/Sirupsen/logrus",
+			"Comment": "v0.2.0-9-g97978e5",
+			"Rev": "97978e5e5483a3f926c2bb6e19f9e2ff344e81f0"
+		},
+		{
+			"ImportPath": "github.com/buildboxhq/buildbox-agent/buildbox",
+			"Comment": "v0.2-beta.11-13-g6da5f0c",
+			"Rev": "6da5f0c778307de187be85e160deb67d785fd14e"
+		},
+		{
+			"ImportPath": "github.com/codegangsta/cli",
+			"Comment": "1.0.0-31-gc606efc",
+			"Rev": "c606efc92b966e5f627f2785d28e7e92787e08d0"
+		},
+		{
+			"ImportPath": "github.com/crowdmob/goamz/aws",
+			"Rev": "2ce2a996945b211826593092e3760e2935133403"
+		},
+		{
+			"ImportPath": "github.com/crowdmob/goamz/s3",
+			"Rev": "2ce2a996945b211826593092e3760e2935133403"
+		},
+		{
+			"ImportPath": "github.com/kr/pty",
+			"Comment": "release.r56-19-g67e2db2",
+			"Rev": "67e2db24c831afa6c64fc17b4a143390674365ef"
+		}
+	]
+}
