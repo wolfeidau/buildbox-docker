@@ -20,7 +20,7 @@ echo -e "\033[33m
 
 -- https://buildbox.io
 
-Latest Version: \033[35mv0.1-alpha.2\033[0m"
+Latest Version: \033[35mv0.1-alpha.3\033[0m"
 
 UNAME=`uname -sp | awk '{print tolower($0)}'`
 
