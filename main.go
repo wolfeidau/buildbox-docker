@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"github.com/buildbox/buildbox-agent/buildbox"
 	"github.com/codegangsta/cli"
-	"log"
 	"os"
 	"os/exec"
 	"sync"
@@ -83,7 +82,7 @@ func main() {
 		agent.Setup()
 
 		// A nice welcome message
-		log.Printf("Started buildbox-docker with agent `%s` (version %s)\n", agent.Name, buildbox.Version)
+		buildbox.Logger.Printf("Started buildbox-docker with agent `%s` (version %s)\n", agent.Name, buildbox.Version)
 
 		// Create a wait group
 		var w sync.WaitGroup
@@ -113,26 +112,26 @@ func start(name string, client buildbox.Client, options Options) {
 	sleepTime := time.Duration(idleSeconds*1000) * time.Millisecond
 
 	// A nice message about the client
-	log.Printf("Starting worker (%s)", name)
+	buildbox.Logger.Printf("Starting worker (%s)", name)
 
 	for {
 		job, err := client.JobNext()
 
 		if err != nil {
-			log.Printf("Failed to get next job: %s\n", err)
+			buildbox.Logger.Printf("Failed to get next job: %s\n", err)
 		} else {
 			// Do we have a job to perform?
 			if job.ID != "" {
-				log.Printf("Worker (%s) is performing job %s", name, job.ID)
+				buildbox.Logger.Printf("Worker (%s) is performing job %s", name, job.ID)
 
 				err = run(client, job, options)
 				if err != nil {
-					log.Printf("Failed to run job %s (%s)", job.ID, err)
+					buildbox.Logger.Printf("Failed to run job %s (%s)", job.ID, err)
 
 					// TODO: mark the job as failed
 				}
 
-				log.Printf("Worker (%s) is now free", name)
+				buildbox.Logger.Printf("Worker (%s) is now free", name)
 			}
 		}
 
