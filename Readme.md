@@ -44,6 +44,17 @@ bash -c "`curl -sL https://raw.github.com/buildboxhq/buildbox-docker/master/inst
 ~/.buildbox/buildbox-docker --access-token [buildbox-agent-access-token]
 ```
 
+#### Building the image locally
+
+```bash
+# Clone and enter the repo
+git clone https://github.com/buildboxhq/buildbox-docker
+cd buildbox-docker
+
+# Build and tag the image
+sudo docker build --tag "buildbox/base" .
+```
+
 #### Running on OSX
 
 The Docker Client can run on OSX, but note that the containers dont, they only support being run on Linux.
