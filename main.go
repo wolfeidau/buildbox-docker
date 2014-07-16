@@ -3,7 +3,7 @@ package main
 import (
 	"errors"
 	"fmt"
-	"github.com/buildboxhq/buildbox-agent/buildbox"
+	"github.com/buildbox/buildbox-agent/buildbox"
 	"github.com/codegangsta/cli"
 	"log"
 	"os"
