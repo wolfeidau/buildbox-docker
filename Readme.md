@@ -38,7 +38,7 @@ curl -s https://get.docker.io/ubuntu/ | sudo sh
 sudo docker pull buildbox/base
 
 # Install buildbox-docker
-bash -c "`curl -sL https://raw.github.com/buildboxhq/buildbox-docker/master/install.sh`"
+bash -c "`curl -sL https://raw.github.com/buildbox/buildbox-docker/master/install.sh`"
 
 # Run the process
 ~/.buildbox/buildbox-docker --access-token [buildbox-agent-access-token]
@@ -48,7 +48,7 @@ bash -c "`curl -sL https://raw.github.com/buildboxhq/buildbox-docker/master/inst
 
 ```bash
 # Clone and enter the repo
-git clone https://github.com/buildboxhq/buildbox-docker
+git clone https://github.com/buildbox/buildbox-docker
 cd buildbox-docker
 
 # Build and tag the image
@@ -72,7 +72,7 @@ brew tap homebrew/binary
 brew install docker
 
 # Setting up the vargant machine
-git clone https://github.com/buildboxhq/buildbox-docker
+git clone https://github.com/buildbox/buildbox-docker
 cd buildbox-docker
 vagrant up
 vagrant ssh
@@ -110,9 +110,9 @@ sudo shutdown -r now
 #### Debugging
 
 ```
-sudo docker run -i -t buildboxhq/base /bin/bash
+sudo docker run -i -t buildbox/base /bin/bash
 
-sudo docker run -name testcontainer123 -i -t buildboxhq/base /bin/bash
+sudo docker run -name testcontainer123 -i -t buildbox/base /bin/bash
 sudo docker commit 040048f4ec52 testimage123
 sudo docker run -i -u buildbox -w "/home/buildbox" -t testimage123 /bin/bash
 ```

@@ -2,11 +2,11 @@
 #
 # You can install the Buildbox Agent with the following:
 #
-#   bash -c "`curl -sL https://raw.github.com/buildboxhq/buildbox-docker/master/install.sh`"
+#   bash -c "`curl -sL https://raw.github.com/buildbox/buildbox-docker/master/install.sh`"
 #
-# For more information, see: https://github.com/buildboxhq/buildbox-docker
+# For more information, see: https://github.com/buildbox/buildbox-docker
 
-COMMAND="bash -c \"\`curl -sL https://raw.github.com/buildboxhq/buildbox-docker/master/install.sh\`\""
+COMMAND="bash -c \"\`curl -sL https://raw.github.com/buildbox/buildbox-docker/master/install.sh\`\""
 
 set -e
 
@@ -55,7 +55,7 @@ echo -e "Destination: \033[35m$DESTINATION\033[0m"
 
 # Download and unzip the file to the destination
 FILE=$DESTINATION/buildbox-docker
-URL="https://github.com/buildboxhq/buildbox-docker/releases/download/v0.1-alpha.2/buildbox-docker-$PLATFORM-$ARCH.gz"
+URL="https://github.com/buildbox/buildbox-docker/releases/download/v0.1-alpha.2/buildbox-docker-$PLATFORM-$ARCH.gz"
 echo -e "\nDownloading $URL"
 
 if command -v wget >/dev/null
@@ -79,7 +79,7 @@ page under \"Agents\".
 
 The source code of the tool is available here:
 
-  https://github.com/buildboxhq/buildbox-docker
+  https://github.com/buildbox/buildbox-docker
 
 If you have any questions or need a help getting things setup,
 please email us at: hello@buildbox.io
