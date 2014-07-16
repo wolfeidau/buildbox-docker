@@ -1,6 +1,4 @@
-# buildbox-docker
-
-```bash
+```
   _           _ _     _ _                                        [ ]
  | |         (_) |   | | |                                 [ ][ ][ ]     \  /
  | |__  _   _ _| | __| | |__   _____  __      +       __[ ][ ][ ][ ][ ]__/ /
@@ -8,6 +6,8 @@
  | |_) | |_| | | | (_| | |_) | (_) >  <       +        \_____.           /
  |_.__/ \__,_|_|_|\__,_|_.__/ \___/_/\_\                \_______________/
 ```
+
+# buildbox-docker
 
 The Builbdox Docker toolset allows you to have agents start/stop within Docker
 containers.
