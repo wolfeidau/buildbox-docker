@@ -1,7 +1,7 @@
 package main
 
 import (
-	"errors"
+	//"errors"
 	"fmt"
 	"github.com/buildbox/buildbox-agent/buildbox"
 	"github.com/codegangsta/cli"
@@ -77,6 +77,8 @@ func main() {
 		// Always in debug mode
 		buildbox.LoggerInitDebug()
 
+		// TODO: Confirm agent can connect to docker
+
 		// Setup the agent
 		agent.Setup()
 
@@ -126,6 +128,8 @@ func start(name string, client buildbox.Client, options Options) {
 				err = run(client, job, options)
 				if err != nil {
 					log.Printf("Failed to run job %s (%s)", job.ID, err)
+
+					// TODO: mark the job as failed
 				}
 
 				log.Printf("Worker (%s) is now free", name)
@@ -138,33 +142,37 @@ func start(name string, client buildbox.Client, options Options) {
 }
 
 func run(client buildbox.Client, job *buildbox.Job, options Options) error {
-	// Extract the agent access token
-	agentAccessToken := ""
+	args := []string{"run"}
+
+	// Remove the container after running
+	args = append(args, "--rm=true")
+
+	// Restrict memory usage in the container
+	// args = append(args, fmt.Sprintf("--memory=%s", options.Memory))
 
 	// Add the environment variables from the API to the process
 	for key, value := range job.Env {
-		if key == "BUILDBOX_AGENT_ACCESS_TOKEN" {
-			agentAccessToken = value
-		}
+		args = append(args, "--env", fmt.Sprintf("%s=%s", key, value))
 	}
 
-	// If one couldn't be found, no job!
-	if agentAccessToken == "" {
-		return errors.New("BUILDBOX_AGENT_ACCESS_TOKEN could not be found")
-	}
+	// Add our custom agent url ENV variable
+	args = append(args, "--env", fmt.Sprintf("BUILDBOX_AGENT_URL=%s", client.URL))
+
+	// Define which container to run in
+	args = append(args, options.Container)
+
+	// Run the build prep script as the command for the container
+	args = append(args, "/home/buildbox/.buildbox/prepare.sh")
 
 	// Create the command to run
-	agentCommand := fmt.Sprintf("buildbox-agent run %s --access-token %s --url %s --debug", job.ID, agentAccessToken, client.URL)
-	memoryOption := fmt.Sprintf("--memory=%s", options.Memory)
-	cmd := exec.Command("docker", "run", "--rm=true", memoryOption, options.Container, "/bin/bash", "--login", "-c", agentCommand)
+	cmd := exec.Command("docker", args...)
 
 	// Pipe the STDERR and STDOUT to this processes outputs
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 
 	// Run the command
-	err := cmd.Run()
-	if err != nil {
+	if err := cmd.Run(); err != nil {
 		return err
 	}
 

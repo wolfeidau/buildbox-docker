@@ -107,12 +107,25 @@ sudo shutdown -r now
 #   sudo docker ps
 ```
 
-#### Debugging
+#### Development
 
-```
+Although `buildbox-docker` does run on OSX, I've found that the STDOUT from
+`docker run` doesn't contain all the output, it usually skips. So when I'm
+developing `buildbox-docker`, my workflow looks something like this:
+
+1. Edit main.go
+2. `./scripts/compile.sh`
+
+Then I switch to the Vagrant VM:
+
+1. `vagrant ssh`
+2. `cd /vargrant`
+3. `./pkg/buildbox-docker --access-token "..."`
+
+When I'm making changes to the `Dockerfile`, I sometimes want to get a bash
+terminal of the image. I can do that with the following command from either
+OSX of the Vagrant VM.
+
+```bash
 sudo docker run -i -t buildbox/base /bin/bash
-
-sudo docker run -name testcontainer123 -i -t buildbox/base /bin/bash
-sudo docker commit 040048f4ec52 testimage123
-sudo docker run -i -u buildbox -w "/home/buildbox" -t testimage123 /bin/bash
 ```

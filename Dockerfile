@@ -265,27 +265,6 @@ RUN apt-get -y --force-yes -q install mercurial golang && \
 
 # =====================================
 #
-# Buildbox Agent
-#
-# =====================================
-
-# Install the agent
-RUN apt-get install -y --force-yes curl && \
-      mkdir -p "/home/buildbox/.buildbox" && \
-      VERSION="0.2" DESTINATION="/home/buildbox/.buildbox" bash -c "`curl -sL https://raw.github.com/buildbox/buildbox-agent/master/install.sh`"
-
-# Add our custom boostrap.sh command
-ADD bootstrap.sh /home/buildbox/.buildbox/bootstrap.sh
-
-# The rest of the setup
-RUN chmod +x /home/buildbox/.buildbox/bootstrap.sh && \
-      chown -R buildbox:buildbox /home/buildbox/.buildbox && \
-      ln -s /home/buildbox/.buildbox/buildbox-agent /usr/local/bin && \
-      ln -s /home/buildbox/.buildbox/buildbox-artifact /usr/local/bin && \
-      ln -s /home/buildbox/.buildbox/buildbox-data /usr/local/bin
-
-# =====================================
-#
 # SSH
 #
 # =====================================
@@ -298,11 +277,12 @@ RUN chmod 644 /etc/ssh/ssh_known_hosts
 
 # =====================================
 #
-# Defaults
+# Buildbox Agent
 #
 # =====================================
 
-# Drop privileges so commands can only be run as buildbox
-ENV HOME /home/buildbox
-WORKDIR /home/buildbox
-USER buildbox
+RUN mkdir /home/buildbox/.buildbox
+COPY buildbox/ /home/buildbox/.buildbox/
+RUN chmod +x /home/buildbox/.buildbox/bootstrap.sh && \
+      chmod +x /home/buildbox/.buildbox/prepare.sh && \
+      chown -R buildbox:buildbox /home/buildbox/.buildbox
