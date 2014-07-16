@@ -1,7 +1,10 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-Vagrant.configure("2") do |config|
+# Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # All Vagrant configuration is done here. The most common configuration
   # options are documented and commented below. For a complete reference,
   # please see the online documentation at vagrantup.com.
@@ -35,6 +38,12 @@ Vagrant.configure("2") do |config|
   # an identifier, the second is the path on the guest to mount the
   # folder, and the third is the path on the host to the actual folder.
   # config.vm.share_folder "v-data", "/vagrant_data", "../data"
+
+  # Customize the virtualbox machine and give it more memory.
+  config.vm.provider "virtualbox" do |v|
+    v.memory = 1024
+    v.cpus = 2
+  end
 
   # Enable provisioning with Puppet stand alone.  Puppet manifests
   # are contained in a directory path relative to this Vagrantfile.

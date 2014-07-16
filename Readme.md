@@ -80,8 +80,12 @@ vagrant ssh
 # Now we've SSH'd into the machine, we can install docker
 curl -s https://get.docker.io/ubuntu/ | sudo sh
 
-# You'll also need to make sure we have the latest copy of the builbdox base image
+# You can either pull the image...
 sudo docker pull buildbox/base
+
+# Or build it yourself
+cd /vagrant
+sudo docker build --tag "buildbox/base" .
 
 # After setting up docker, we need to change how the docker daemon is run.
 # By default, the daemon runs on a unix socket, but we can't access that from OSX. So we need to change it
