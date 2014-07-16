@@ -15,7 +15,7 @@ var AppHelpTemplate = `TODO
 
 Usage:
 
-  buildbox-docker --access-token [access-token]
+  buildbox-docker --agent-access-token [access-token]
 `
 
 type Options struct {
@@ -35,9 +35,9 @@ func main() {
 
 	// Define the actions for our CLI
 	app.Flags = []cli.Flag{
-		cli.StringFlag{"access-token", "", "The access token used to identify the agent."},
+		cli.StringFlag{"agent-access-token", "", "The access token used to identify the agent."},
 		cli.StringFlag{"docker-container", "buildbox/base", "The docker container to run the jobs in."},
-		cli.StringFlag{"memory", "4g", "Memory limit (format: <number><optional unit>, where unit = b, k, m or g)"},
+		cli.StringFlag{"docker-memory", "4g", "Memory limit (format: <number><optional unit>, where unit = b, k, m or g)"},
 		cli.IntFlag{"workers", 2, "How many builds the machine is able to perform at any one time"},
 		cli.StringFlag{"url", "https://agent.buildbox.io/v1", "The Agent API endpoint."},
 		cli.BoolFlag{"debug", "Enable debug mode."},
@@ -45,7 +45,7 @@ func main() {
 
 	// Setup the main action for out application
 	app.Action = func(c *cli.Context) {
-		if c.String("access-token") == "" {
+		if c.String("agent-access-token") == "" {
 			fmt.Printf("buildbox-docker: missing access token\nSee 'buildbox-docker --help'\n")
 			os.Exit(1)
 		}
@@ -65,12 +65,12 @@ func main() {
 		var agent buildbox.Agent
 
 		// Client specific options
-		agent.Client.AgentAccessToken = c.String("access-token")
+		agent.Client.AgentAccessToken = c.String("agent-access-token")
 		agent.Client.URL = c.String("url")
 
 		// Job specific options
 		var options Options
-		options.Memory = c.String("memory")
+		options.Memory = c.String("docker-memory")
 		options.Container = c.String("docker-container")
 
 		// Always in debug mode

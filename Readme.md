@@ -41,7 +41,7 @@ sudo docker pull buildbox/base
 bash -c "`curl -sL https://raw.github.com/buildbox/buildbox-docker/master/install.sh`"
 
 # Run the process
-~/.buildbox/buildbox-docker --access-token [buildbox-agent-access-token]
+~/.buildbox/buildbox-docker --agent-access-token [buildbox-agent-access-token]
 ```
 
 #### Building the image locally
