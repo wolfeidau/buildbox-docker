@@ -15,7 +15,12 @@ function buildbox-run {
   buildbox-exit-if-failed $?
 }
 
-echo '--- setup environment'
+echo '--- booting vm environment'
+
+buildbox-run "sudo mysqld_safe &"
+buildbox-run "sudo /etc/init.d/postgresql start"
+buildbox-run "sudo /etc/init.d/redis start"
+buildbox-run "Xvfb :99 -ac > /dev/null 2>&1 & export DISPLAY=:99"
 
 # This will return the location of this file. We assume that the buildbox-artifact
 # tool is in the same folder. You can of course customize the locations
@@ -26,16 +31,10 @@ BUILDBOX_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 export PATH="$BUILDBOX_DIR:$PATH"
 
 # Create the build directory
-BUILDBOX_BUILD_DIR="$BUILDBOX_AGENT_NAME/$BUILDBOX_PROJECT_SLUG"
+BUILDBOX_BUILD_DIR="$BUILDBOX_CACHE_DIRECTORY/repos/$BUILDBOX_PROJECT_SLUG"
 
 buildbox-run "mkdir -p $BUILDBOX_BUILD_DIR"
 buildbox-run "cd $BUILDBOX_BUILD_DIR"
-
-# Do we need to do a git checkout?
-if [ ! -d ".git" ]
-then
-  buildbox-run "git clone "$BUILDBOX_REPO" . -qv"
-fi
 
 # Default empty branch names
 if [ "$BUILDBOX_BRANCH" == "" ]
@@ -43,10 +42,24 @@ then
   BUILDBOX_BRANCH="master"
 fi
 
-buildbox-run "git clean -fdq"
-buildbox-run "git fetch -q"
+# Do we need to do a git checkout?
+if [ ! -d ".git" ]
+then
+  echo '--- cloning repository'
+
+  buildbox-run "git clone "$BUILDBOX_REPO" . -qv"
+else
+  echo '--- updating repository'
+
+  buildbox-run "git clean -fdq"
+  buildbox-run "git fetch -q"
+fi
+
 buildbox-run "git reset --hard origin/$BUILDBOX_BRANCH"
 buildbox-run "git checkout -qf \"$BUILDBOX_COMMIT\""
+
+# Setup bundler to install gems into the cache directory
+export BUNDLE_PATH="$BUILDBOX_CACHE_DIRECTORY/bundler"
 
 echo "--- running $BUILDBOX_SCRIPT_PATH"
 
