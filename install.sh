@@ -55,7 +55,7 @@ echo -e "Destination: \033[35m$DESTINATION\033[0m"
 
 # Download and unzip the file to the destination
 FILE=$DESTINATION/buildbox-docker
-URL="https://github.com/buildbox/buildbox-docker/releases/download/v0.1-alpha.3/buildbox-docker-$PLATFORM-$ARCH.gz"
+URL="https://github.com/buildbox/buildbox-docker/releases/download/v0.1-alpha.4/buildbox-docker-$PLATFORM-$ARCH.gz"
 echo -e "\nDownloading $URL"
 
 if command -v wget >/dev/null
