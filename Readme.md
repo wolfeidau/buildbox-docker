@@ -120,7 +120,7 @@ Then I switch to the Vagrant VM:
 
 1. `vagrant ssh`
 2. `cd /vargrant`
-3. `./pkg/buildbox-docker --access-token "..."`
+3. `./pkg/buildbox-docker --agent-access-token "..."`
 
 When I'm making changes to the `Dockerfile`, I sometimes want to get a bash
 terminal of the image. I can do that with the following command from either
