@@ -14,7 +14,7 @@ echo -e "\033[33m
   _           _ _     _ _                                        [ ]
  | |         (_) |   | | |                                 [ ][ ][ ]     \  /
  | |__  _   _ _| | __| | |__   _____  __      +       __[ ][ ][ ][ ][ ]__/ /
- | '_ \| | | | | |/ _\` | '_ \ / _ \ \/ /    +++++   ~~\~~~~~~~~~~~~~~~~~~~/~~
+ | '_ \| | | | | |/ _\` | '_ \ / _ \ \/ /   ++++++   ~~\~~~~~~~~~~~~~~~~~~~/~~
  | |_) | |_| | | | (_| | |_) | (_) >  <       +        \_____.           /
  |_.__/ \__,_|_|_|\__,_|_.__/ \___/_/\_\                \_______________/\033[0m
 
@@ -55,7 +55,7 @@ echo -e "Destination: \033[35m$DESTINATION\033[0m"
 
 # Download and unzip the file to the destination
 FILE=$DESTINATION/buildbox-docker
-URL="https://github.com/buildbox/buildbox-docker/releases/download/v0.1-alpha.2/buildbox-docker-$PLATFORM-$ARCH.gz"
+URL="https://github.com/buildbox/buildbox-docker/releases/download/v0.1-alpha.3/buildbox-docker-$PLATFORM-$ARCH.gz"
 echo -e "\nDownloading $URL"
 
 if command -v wget >/dev/null
@@ -72,7 +72,7 @@ echo -e "\n\033[32mSuccessfully installed to: $FILE\033[0m
 
 You can now start the buildbox-docker tool like so:
 
-  $DESTINATION/buildbox-docker --access-token token123
+  $DESTINATION/buildbox-docker --agent-access-token token123
 
 You can find your agent's Access Token on your Account Settings
 page under \"Agents\".
