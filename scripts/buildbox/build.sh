@@ -11,4 +11,4 @@ go get github.com/tools/godep
 godep restore
 
 echo '--- building'
-./scripts/build.sh
+./scripts/package.sh
