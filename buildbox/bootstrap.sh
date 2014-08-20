@@ -61,6 +61,9 @@ buildbox-run "git checkout -qf \"$BUILDBOX_COMMIT\""
 # Setup bundler to install gems into the cache directory
 export BUNDLE_PATH="$BUILDBOX_CACHE_DIRECTORY/bundler"
 
+# Point ruby gems to include the bundle cache directory
+export GEM_PATH="$BUNDLE_PATH:$GEM_PATH"
+
 echo "--- running $BUILDBOX_SCRIPT_PATH"
 
 if [ "$BUILDBOX_SCRIPT_PATH" == "" ]
