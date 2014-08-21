@@ -112,6 +112,9 @@ ENV PGPORT 5432
 ENV PGLOG /var/log/postgresql/postgresql-9.3-main.log
 # ENV PGHOME=$PGHOME
 
+# Create a buildbox user for the database
+RUN createuser buildbox --superuser --no-password
+
 # =====================================
 #
 # PhantomJS
