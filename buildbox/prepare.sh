@@ -2,6 +2,13 @@
 set -e
 set -x
 
+# Set Postgres related ENV variables
+export PGDATA="/var/lib/postgresql/9.3/main"
+export PGHOST="localhost"
+export PGUSER="postgres"
+export PGPORT="5432"
+export PGLOG="/var/log/postgresql/postgresql-9.3-main.log"
+
 # Setup the SSH keys for this agent
 echo "$BUILDBOX_AGENT_SSH_PRIVATE_KEY" >> /home/buildbox/.ssh/id_rsa
 echo "$BUILDBOX_AGENT_SSH_PUBLIC_KEY" >> /home/buildbox/.ssh/id_rsa.pub

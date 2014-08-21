@@ -104,13 +104,7 @@ RUN service postgresql stop && \
 # Add in our custom pg_hba.conf
 ADD postgresql/pg_hba.conf /etc/postgresql/9.3/main/pg_hba.conf
 
-# Set the PGUSER env variable
-ENV PGDATA /var/lib/postgresql/9.3/main
-ENV PGHOST localhost
-ENV PGUSER postgres
-ENV PGPORT 5432
-ENV PGLOG /var/log/postgresql/postgresql-9.3-main.log
-# ENV PGHOME=$PGHOME
+# PG ENV variables are set in prepare.sh
 
 # =====================================
 #
