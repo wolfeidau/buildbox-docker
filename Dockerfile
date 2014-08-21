@@ -265,6 +265,14 @@ RUN apt-get -y --force-yes -q install mercurial golang && \
 
 # =====================================
 #
+# Heroku CLI (hk)
+#
+# =====================================
+
+RUN L=/usr/local/bin/hk && curl -sL -A "`uname -sp`" https://hk.heroku.com/hk.gz | zcat >$L && chmod +x $L
+
+# =====================================
+#
 # SSH
 #
 # =====================================
