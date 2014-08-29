@@ -251,7 +251,8 @@ RUN apt-get -y --force-yes -q install firefox
 #
 # =====================================
 
-RUN cd /tmp && curl -L -O https://storage.googleapis.com/golang/go1.3.1.linux-amd64.tar.gz && \
+RUN apt-get -y --force-yes -q install mercurial && \
+      cd /tmp && curl -L -O https://storage.googleapis.com/golang/go1.3.1.linux-amd64.tar.gz && \
       tar -C /usr/local -xzf /tmp/go1.3.1.linux-amd64.tar.gz && \
       mkdir /home/buildbox/.go && \
       chown -R buildbox:buildbox /home/buildbox/.go && \
