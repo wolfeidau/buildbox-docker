@@ -259,14 +259,13 @@ RUN apt-get -y --force-yes -q install mercurial && \
       echo 'export GOROOT="/usr/local/go"' >> /home/buildbox/.profile && \
       echo 'export GOPATH="/home/buildbox/.go"' >> /home/buildbox/.profile && \
       echo 'export PATH="/home/buildbox/.go/bin:/usr/local/go/bin:$PATH"' >> /home/buildbox/.profile && \
-      cd /usr/local/go/misc/bash && \
-      GOOS=windows GOARCH=386 ./make.bash --no-clean && \
-      GOOS=windows GOARCH=amd64 ./make.bash --no-clean && \
-      GOOS=linux GOARCH=amd64 ./make.bash --no-clean && \
-      GOOS=linux GOARCH=386 ./make.bash --no-clean && \
-      GOOS=linux GOARCH=arm ./make.bash --no-clean && \
-      GOOS=darwin GOARCH=386 ./make.bash --no-clean && \
-      GOOS=darwin GOARCH=amd64 ./make.bash --no-clean
+      cd /usr/local/go/misc/bash && GOOS=windows GOARCH=386 ./make.bash --no-clean && \
+      cd /usr/local/go/misc/bash && GOOS=windows GOARCH=amd64 ./make.bash --no-clean && \
+      cd /usr/local/go/misc/bash && GOOS=linux GOARCH=amd64 ./make.bash --no-clean && \
+      cd /usr/local/go/misc/bash && GOOS=linux GOARCH=386 ./make.bash --no-clean && \
+      cd /usr/local/go/misc/bash && GOOS=linux GOARCH=arm ./make.bash --no-clean && \
+      cd /usr/local/go/misc/bash && GOOS=darwin GOARCH=386 ./make.bash --no-clean && \
+      cd /usr/local/go/misc/bash && GOOS=darwin GOARCH=amd64 ./make.bash --no-clean
 
 # =====================================
 #
