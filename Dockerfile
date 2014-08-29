@@ -251,13 +251,12 @@ RUN apt-get -y --force-yes -q install firefox
 #
 # =====================================
 
-RUN add-apt-repository ppa:gophers/go && \
-      apt-get update && \
-      apt-get -y --force-yes -q install golang-stable && \
+RUN cd /tmp && curl -L -O https://storage.googleapis.com/golang/go1.3.1.linux-amd64.tar.gz && \
+      tar -C /usr/local -xzf /tmp/go1.3.1.linux-amd64.tar.gz && \
       mkdir /home/buildbox/.go && \
       chown -R buildbox:buildbox /home/buildbox/.go && \
       echo 'export GOPATH="/home/buildbox/.go"' >> /home/buildbox/.profile && \
-      echo 'export PATH="/home/buildbox/.go/bin:$PATH"' >> /home/buildbox/.profile
+      echo 'export PATH="/home/buildbox/.go/bin:/usr/local/go/bin:$PATH"' >> /home/buildbox/.profile
 
 # =====================================
 #
