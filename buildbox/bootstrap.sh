@@ -55,7 +55,12 @@ else
   buildbox-run "git fetch -q"
 fi
 
+# Only reset to the branch if we're not on a tag
+if [ "$BUILDBOX_TAG" == "" ]
+then
 buildbox-run "git reset --hard origin/$BUILDBOX_BRANCH"
+fi
+
 buildbox-run "git checkout -qf \"$BUILDBOX_COMMIT\""
 
 # Setup bundler to install gems into the cache directory
