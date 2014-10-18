@@ -61,7 +61,8 @@ RUN sudo su buildbox /bin/bash --login -c "rbenv install 2.0.0-p247 && rbenv loc
 RUN sudo su buildbox /bin/bash --login -c "rbenv install 2.1.0 && rbenv local 2.1.0 && gem update --system && gem install bundler && rbenv rehash"
 RUN sudo su buildbox /bin/bash --login -c "rbenv install 2.1.1 && rbenv local 2.1.1 && gem update --system && gem install bundler && rbenv rehash"
 RUN sudo su buildbox /bin/bash --login -c "rbenv install 2.1.2 && rbenv local 2.1.2 && gem update --system && gem install bundler && rbenv rehash"
-RUN sudo su buildbox /bin/bash --login -c "rbenv global 2.1.2"
+RUN sudo su buildbox /bin/bash --login -c "rbenv install 2.1.3 && rbenv local 2.1.3 && gem update --system && gem install bundler && rbenv rehash"
+RUN sudo su buildbox /bin/bash --login -c "rbenv global 2.1.3"
 
 # =====================================
 #
