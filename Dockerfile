@@ -50,7 +50,7 @@ RUN apt-get install -y --force-yes python-software-properties software-propertie
 
 RUN apt-get install -y --force-yes build-essential curl openssl libssl-dev git-core vim tklib zlib1g-dev libssl-dev libreadline-gplv2-dev libxml2 libxml2-dev libxslt1-dev && \
       git clone https://github.com/sstephenson/rbenv.git /home/buildbox/.rbenv && \
-      echo 'export PATH="\$HOME/.rbenv/bin:\$PATH"' >> /home/buildbox/.profile && \
+      echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> /home/buildbox/.profile && \
       echo 'eval "$(rbenv init -)"' >> /home/buildbox/.profile && \
       git clone https://github.com/sstephenson/ruby-build.git /home/buildbox/.rbenv/plugins/ruby-build && \
       echo 'gem: --no-rdoc --no-ri' >> /home/buildbox/.gemrc && \
@@ -259,7 +259,7 @@ RUN apt-get -y --force-yes -q install mercurial && \
       chown -R buildbox:buildbox /home/buildbox/.go && \
       echo 'export GOROOT="/usr/local/go"' >> /home/buildbox/.profile && \
       echo 'export GOPATH="/home/buildbox/.go"' >> /home/buildbox/.profile && \
-      echo 'export PATH="/home/buildbox/.go/bin:/usr/local/go/bin:\$PATH"' >> /home/buildbox/.profile && \
+      echo 'export PATH="/home/buildbox/.go/bin:/usr/local/go/bin:$PATH"' >> /home/buildbox/.profile && \
       cd /usr/local/go/src && GOOS=windows GOARCH=386 ./make.bash --no-clean && \
       cd /usr/local/go/src && GOOS=windows GOARCH=amd64 ./make.bash --no-clean && \
       cd /usr/local/go/src && GOOS=linux GOARCH=amd64 ./make.bash --no-clean && \
