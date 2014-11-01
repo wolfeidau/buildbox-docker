@@ -206,8 +206,7 @@ RUN apt-get -y --force-yes -q install sphinxsearch
 RUN cd /tmp && curl -L -O https://wkhtmltopdf.googlecode.com/files/wkhtmltopdf-0.9.9-static-amd64.tar.bz2 && \
      tar jxf wkhtmltopdf-0.9.9-static-amd64.tar.bz2 && \
      chmod 777 wkhtmltopdf-amd64 && \
-     sudo mv wkhtmltopdf-amd64 /usr/local/bin/wkhtmltopdf && \
-     sudo chown deploy:deploy /usr/local/bin/wkhtmltopdf
+     mv wkhtmltopdf-amd64 /usr/local/bin/wkhtmltopdf
 
 # =====================================
 #
