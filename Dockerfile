@@ -214,7 +214,7 @@ RUN cd /tmp && curl -L -O https://wkhtmltopdf.googlecode.com/files/wkhtmltopdf-0
 #
 # =====================================
 
-RUN apt-get -y --force-yes -q install wget ntp
+RUN apt-get -y --force-yes -q install wget ntp zip
 
 # =====================================
 #
