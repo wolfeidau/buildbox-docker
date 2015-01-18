@@ -1,1 +1,1 @@
-[Buildbox Agent](https://github.com/buildbox/agent) now supports Docker and this repository is no longer needed. Read the [work-in-progress documentation](https://slack-files.com/T024QV18T-F032P159A-b9fc43e68d) for how to get started with running your builds using Docker.
+This project has been discontinued as [Buildbox Agent](https://github.com/buildbox/agent) now Docker support built-in. See the [work-in-progress documentation](https://slack-files.com/T024QV18T-F032P159A-b9fc43e68d) for details.
